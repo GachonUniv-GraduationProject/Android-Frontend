@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.graduationproject.R;
+import com.example.graduationproject.RoadmapActivity;
 
 public class TrendActivity extends AppCompatActivity {
 
@@ -20,6 +21,7 @@ public class TrendActivity extends AppCompatActivity {
         Button btn_pieChart = findViewById(R.id.btn_pieChart);
         Button btn_radarChart = findViewById(R.id.btn_radarChart);
         Button btn_bubbleChart = findViewById(R.id.btn_bubbleChart);
+        Button btn_enterRoadmap = findViewById(R.id.btn_enterRoadmap);
         btn_barChart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,7 +49,12 @@ public class TrendActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), BubbleChartActivity.class));
             }
         });
-
+        btn_enterRoadmap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), RoadmapActivity.class));
+            }
+        });
 
     }
 }

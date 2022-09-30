@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="roadmap_step_color_arr">
+        <item>@color/roadmap_color_small</item>
+        <item>@color/roadmap_color_middle</item>
+        <item>@color/roadmap_color_large</item>
+    </array>
+</resources>

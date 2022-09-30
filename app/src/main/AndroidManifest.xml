@@ -13,6 +13,9 @@
         android:theme="@style/Theme.GraduationProject"
         tools:targetApi="31">
         <activity
+            android:name=".RoadmapActivity"
+            android:exported="false" />
+        <activity
             android:name=".trend.RadarChartActivity"
             android:exported="true"
             android:parentActivityName=".trend.TrendActivity">
