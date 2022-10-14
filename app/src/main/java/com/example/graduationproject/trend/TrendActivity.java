@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.graduationproject.CapacityActivity;
 import com.example.graduationproject.R;
 import com.example.graduationproject.RoadmapActivity;
 
@@ -22,6 +23,8 @@ public class TrendActivity extends AppCompatActivity {
         Button btn_radarChart = findViewById(R.id.btn_radarChart);
         Button btn_bubbleChart = findViewById(R.id.btn_bubbleChart);
         Button btn_enterRoadmap = findViewById(R.id.btn_enterRoadmap);
+        Button btn_capacity = findViewById(R.id.btn_capacity);
+
         btn_barChart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,6 +56,12 @@ public class TrendActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), RoadmapActivity.class));
+            }
+        });
+        btn_capacity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), CapacityActivity.class));
             }
         });
 
