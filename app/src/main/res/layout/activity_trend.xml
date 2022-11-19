@@ -45,4 +45,20 @@
       android:id="@+id/btn_capacity"
       android:text="Capacity"/>
 
+  <View
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_weight="1"/>
+
+  <com.google.android.material.bottomnavigation.BottomNavigationView
+      android:id="@+id/bottom_menu"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:itemIconTint="@color/white"
+      app:itemTextColor="@color/white"
+      android:background="@color/bottom_navigation"
+      app:menu="@menu/bottom_menu"/>
+
+
+
   </LinearLayout>

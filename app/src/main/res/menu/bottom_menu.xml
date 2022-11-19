@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/trend_tab"
+        app:showAsAction="always"
+        android:enabled="true"
+        android:icon="@drawable/trend"
+        android:iconTint="@color/white"
+        android:title="Trend"/>
+
+    <item
+        android:id="@+id/roadmap_tab"
+        app:showAsAction="always"
+        android:enabled="true"
+        android:icon="@drawable/roadmap"
+        android:iconTint="@color/white"
+        android:title="Roadmap"/>
+
+    <item
+        android:id="@+id/capability_tab"
+        app:showAsAction="always"
+        android:enabled="true"
+        android:icon="@drawable/thinking"
+        android:iconTint="@color/white"
+        android:title="Capability"/>
+</menu>

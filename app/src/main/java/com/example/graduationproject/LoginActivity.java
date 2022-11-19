@@ -24,13 +24,13 @@ public class LoginActivity extends AppCompatActivity {
         EditText enterPassword = findViewById(R.id.input_password);
 
         Button loginBtn = findViewById(R.id.login_btn2);
-        moveToMain = new Intent(this, MainActivity.class);
+        moveToMain = new Intent(this, StartActivity.class);
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 /* 테스트용 */
-                Intent testIntent = new Intent(getApplicationContext(), TrendActivity.class);
+                Intent testIntent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(testIntent);
 
                 // TODO: 나중에 로그인 기능 구현시 복구

@@ -10,6 +10,10 @@ import android.widget.Button;
 import com.example.graduationproject.CapacityActivity;
 import com.example.graduationproject.R;
 import com.example.graduationproject.RoadmapActivity;
+import com.example.graduationproject.trend.BarChartActivity;
+import com.example.graduationproject.trend.BubbleChartActivity;
+import com.example.graduationproject.trend.PieChartActivity;
+import com.example.graduationproject.trend.RadarChartActivity;
 
 public class TrendActivity extends AppCompatActivity {
 
