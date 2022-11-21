@@ -12,5 +12,5 @@
     <color name="roadmap_color_small">#FFC552</color>
     <color name="roadmap_color_middle">#D89AFD</color>
     <color name="roadmap_color_large">#FF4545</color>
-    <color name="bottom_navigation">#257CFF</color>
+    <color name="primary_color">#257CFF</color>
 </resources>

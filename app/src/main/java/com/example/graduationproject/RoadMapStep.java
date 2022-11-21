@@ -2,16 +2,18 @@ package com.example.graduationproject;
 
 public class RoadMapStep {
     private String name;
+    private boolean locked;
     private RoadmapDrawer.Category category;
     private int posX;
     private int posY;
 
     private RoadMapStep baseStep;
 
-    public RoadMapStep(String name, RoadmapDrawer.Category category, RoadMapStep baseStep) {
+    public RoadMapStep(String name, RoadmapDrawer.Category category, RoadMapStep baseStep, boolean locked) {
         this.name = name;
         this.category = category;
         this.baseStep = baseStep;
+        this.locked = locked;
     }
 
     public void setPos(int x, int y) {
@@ -35,5 +37,13 @@ public class RoadMapStep {
 
     public RoadMapStep getBaseStep() {
         return baseStep;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
     }
 }

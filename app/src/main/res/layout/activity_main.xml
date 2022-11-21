@@ -17,16 +17,12 @@
         android:orientation="vertical">
     </LinearLayout>
 
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_menu"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
-        android:background="@color/bottom_navigation"
+        android:background="@color/primary_color"
         app:menu="@menu/bottom_menu"/>
-
-
-
 </LinearLayout>
