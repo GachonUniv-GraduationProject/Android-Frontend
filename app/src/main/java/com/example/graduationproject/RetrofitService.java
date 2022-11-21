@@ -1,9 +1,10 @@
 package com.example.graduationproject;
 
 import retrofit2.Call;
-import retrofit2.http.GET;
+import retrofit2.http.Body;
+import retrofit2.http.POST;
 
 public interface RetrofitService {
-    @GET("user")
-    Call<String> getData();
+    @POST("user/login/")
+    Call<LoginData> login(@Body UserData userData);
 }
