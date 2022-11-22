@@ -11,8 +11,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,9 +21,9 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
+        setContentView(R.layout.activity_login);
 
-        EditText emailEditText = findViewById(R.id.input_email);
+        EditText idEditText = findViewById(R.id.signup_email_edittext);
         EditText passwordEditText = findViewById(R.id.input_password);
 
         Button loginBtn = findViewById(R.id.login_btn2);
@@ -34,15 +32,15 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (emailEditText.length() == 0) {
-                    showToast("이메일을 입력하세요.");
+                if (idEditText.length() == 0) {
+                    showToast("아이디를 입력하세요.");
                 }
                 else if(passwordEditText.length() == 0) {
                     showToast("비밀번호를 입력하세요.");
                 }
                 else {
 
-                    UserData userData = new UserData(emailEditText.getText().toString(), passwordEditText.getText().toString());
+                    UserData userData = new UserData(idEditText.getText().toString(), passwordEditText.getText().toString());
                     RetrofitService service = RetrofitClient.getRetrofitService();
                     Call<LoginData> login = service.login(userData);
                     login.enqueue(new Callback<LoginData>() {
@@ -76,11 +74,11 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-        public void showToast(String msg){
-            Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.TOP, 0, 200);
-            toast.show();
-        }
+    public void showToast(String msg){
+        Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP, 0, 200);
+        toast.show();
     }
+}
 
 

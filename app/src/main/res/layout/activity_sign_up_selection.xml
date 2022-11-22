@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    tools:context=".SignUpSelectionActivity">
+
+    <TextView
+        android:id="@+id/Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textColor="#4D82F5"
+        android:textSize="40sp"
+        android:layout_margin="10dp"
+        />
+
+    <TextView
+        android:id="@+id/sub_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="가입 유형을 선택해주세요."
+        android:textAlignment="center"
+        android:textColor="#4D82F5"
+        android:textSize="20sp"
+        android:layout_margin="10dp"
+        />
+
+    <Button
+        android:id="@+id/personal_signup_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="30dp"
+        android:layout_marginHorizontal="50dp"
+        android:paddingVertical="30dp"
+        android:background="@drawable/login_button_shape"
+        android:drawableTop="@drawable/ic_baseline_person_100"
+        android:drawablePadding="10dp"
+        android:text="개인 회원가입"
+        android:textSize="20dp"/>
+
+
+    <Button
+        android:id="@+id/business_signup_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="30dp"
+        android:layout_marginHorizontal="50dp"
+        android:paddingVertical="30dp"
+        android:background="@drawable/login_button_shape"
+        android:drawableTop="@drawable/ic_office"
+        android:drawableTint="@color/icon_color"
+        android:drawablePadding="10dp"
+        android:text="기업 회원가입"
+        android:textSize="20dp"/>
+
+</LinearLayout>

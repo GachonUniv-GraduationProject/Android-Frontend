@@ -7,43 +7,39 @@ import com.google.gson.annotations.SerializedName;
 
 public class UserData implements Parcelable {
     @SerializedName("id")
-    private int id;
+    private String id;
     @SerializedName("email")
     private String email;
     @SerializedName("username")
     private String username;
     @SerializedName("password")
     private String password;
-    @SerializedName("nickname")
-    private String nickname;
 
     public UserData(String username, String password) {
         this.username = username;
         this.password = password;
-        nickname = email = "";
+        email = "";
     }
 
-    public UserData(int id, String email, String password, String username, String nickname) {
+    public UserData(String username, String id, String password, String email) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.username = username;
-        this.nickname = nickname;
     }
 
     public UserData(Parcel in) {
-        id = in.readInt();
+        id = in.readString();
         email = in.readString();
         username = in.readString();
         password = in.readString();
-        nickname = in.readString();
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -71,14 +67,6 @@ public class UserData implements Parcelable {
         this.password = password;
     }
 
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
     public static final Creator<UserData> CREATOR = new Creator<UserData>() {
         @Override
         public UserData createFromParcel(Parcel parcel) {
@@ -96,12 +84,10 @@ public class UserData implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeString(id);
         dest.writeString(email);
         dest.writeString(username);
         dest.writeString(password);
-        dest.writeString(nickname);
-
     }
 
 }
