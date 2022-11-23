@@ -58,6 +58,23 @@
         android:imeOptions="actionDone"
         />
 
+    <CheckBox
+        android:id="@+id/auto_login_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginLeft="85dp"
+        android:layout_marginBottom="20dp"
+        android:scaleX="0.7"
+        android:scaleY="0.7"
+        android:paddingLeft="10dp"
+        android:button="@drawable/check_box"
+        android:text="자동 로그인"
+        android:textColor="@color/black"
+        android:textSize="20dp"/>
+
+
+
     <Button
         android:id="@+id/login_btn2"
         android:layout_width="270dp"

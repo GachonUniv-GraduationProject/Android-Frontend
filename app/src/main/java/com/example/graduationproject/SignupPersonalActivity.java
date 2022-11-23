@@ -32,7 +32,7 @@ public class SignupPersonalActivity extends AppCompatActivity {
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = nameEditText.getText().toString();
+                /*String name = nameEditText.getText().toString();
                 String id = idEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
                 String email = emailEditText.getText().toString();
@@ -60,10 +60,9 @@ public class SignupPersonalActivity extends AppCompatActivity {
                         Toast.makeText(SignupPersonalActivity.this, "Sign up Failed.", Toast.LENGTH_SHORT).show();
                         Log.d("Server Test", "<Sign up-Personal> onFailure: " + t.getMessage());
                     }
-                });
-
-
-
+                });*/
+                Intent surveyActivity = new Intent(getApplicationContext(), PersonalSurveyActivity.class);
+                startActivity(surveyActivity);
             }
         });
 
