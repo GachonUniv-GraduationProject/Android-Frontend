@@ -1,21 +1,32 @@
 package com.example.graduationproject;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import androidx.annotation.Dimension;
+import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RoadmapDrawer extends View {
     private Canvas mainCanvas;
+    private FrameLayout roadmapFrameContainer;
+    private static Context context;
 
     private Path linePath;
     private Paint outerPaint;
@@ -25,27 +36,15 @@ public class RoadmapDrawer extends View {
     private int[] roadmapColor;
 
     private List<RoadMapStep> roadMap;
+    private List<ImageView> imageViewList;
+    private List<TextView> textViewList;
     public enum Category {SMALL, MIDDLE, LARGE};
     private final int INTERVAL = 50;
 
-    public RoadmapDrawer(Context context) {
+    private LinkDialog linkDialog;
+
+    public RoadmapDrawer(Context context, FrameLayout roadmapContainer) {
         super(context);
-
-        init();
-    }
-
-    private void init() {
-        outerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        outerPaint.setColor(Color.BLACK);
-        outerPaint.setStyle(Paint.Style.STROKE);
-        outerPaint.setStrokeWidth(dpToPx(4));
-
-        namePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        namePaint.setTextSize(dpToPx(15));
-
-        linePath = new Path();
-        innerPnt = new Paint();
-        roadmapColor = getResources().getIntArray(R.array.roadmap_step_color_arr);
 
         roadMap = new ArrayList<>();
         roadMap.add(new RoadMapStep("Test1", Category.LARGE, null, false));
@@ -62,6 +61,41 @@ public class RoadmapDrawer extends View {
         roadMap.add(new RoadMapStep("Test1-10", Category.MIDDLE, roadMap.get(0), true));
         roadMap.add(new RoadMapStep("Test1-11", Category.MIDDLE, roadMap.get(0), true));
         roadMap.add(new RoadMapStep("Test1-12", Category.MIDDLE, roadMap.get(0), true));
+
+        initView(context, roadmapContainer);
+        initCanvas();
+    }
+
+    private void initView(Context context, FrameLayout roadmapFrameContainer) {
+        this.context = context;
+        this.roadmapFrameContainer = roadmapFrameContainer;
+        imageViewList = new ArrayList<>();
+        textViewList = new ArrayList<>();
+        for(int i = 0; i < roadMap.size(); i++) {
+            ImageView imageView = new ImageView(context);
+            imageViewList.add(imageView);
+            roadmapFrameContainer.addView(imageView);
+
+            TextView textView = new TextView(context);
+            textView.setTextColor(Color.BLACK);
+            textView.setTextSize(Dimension.SP, 15);
+            textViewList.add(textView);
+            roadmapFrameContainer.addView(textView);
+        }
+    }
+
+    private void initCanvas() {
+        outerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        outerPaint.setColor(Color.BLACK);
+        outerPaint.setStyle(Paint.Style.STROKE);
+        outerPaint.setStrokeWidth(dpToPx(4));
+
+        namePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        namePaint.setTextSize(dpToPx(15));
+
+        linePath = new Path();
+        innerPnt = new Paint();
+        roadmapColor = getResources().getIntArray(R.array.roadmap_step_color_arr);
 
         setLayoutHeight();
     }
@@ -117,9 +151,41 @@ public class RoadmapDrawer extends View {
             mainCanvas.drawText(lockedMessage, x + dpToPx(lockWidth + 15), y, namePaint);
         }
         else {
-            namePaint.setColor(Color.BLACK);
-            mainCanvas.drawText(name, x, y, namePaint);
+            //namePaint.setColor(Color.BLACK);
+            //mainCanvas.drawText(name, x, y, namePaint);
+            setNodeName(index, name, category);
+
         }
+    }
+    private void setNodeName(int index, String name, Category category) {
+        TextView textView = textViewList.get(index);
+
+        textView.setText(name);
+
+        int circleSize = getCircleSize(category) + dpToPx(2);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        textView.setLayoutParams(params);
+        textView.setX(getCirclePosX(category) + circleSize + dpToPx(10));
+        textView.setY(getCirclePosY(index) - dpToPx(10));
+
+        textView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                linkDialog = new LinkDialog(context);
+                linkDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                linkDialog.setContentView(R.layout.dialog_link_to_reference);
+
+                showLinkDialog();
+            }
+        });
+    }
+
+    private void showLinkDialog() {
+        String[] titles = {"교육자료 1", "교육자료 2"};
+        String[] urls = {"https://www.youtube.com/", "https://www.youtube.com/"};
+        linkDialog.setLinkSets(titles, urls);
+
+        linkDialog.show();
     }
 
     private void drawLine(int index) {
@@ -152,9 +218,10 @@ public class RoadmapDrawer extends View {
     private void drawCircle(int index, int innerColor) {
         Category category = roadMap.get(index).getCategory();
 
-        innerPnt.setColor(innerColor);
-        mainCanvas.drawCircle(getCirclePosX(category), getCirclePosY(index), getCircleSize(category), innerPnt);
-        mainCanvas.drawCircle(getCirclePosX(category), getCirclePosY(index), getCircleSize(category), outerPaint);
+        //innerPnt.setColor(innerColor);
+        //mainCanvas.drawCircle(getCirclePosX(category), getCirclePosY(index), getCircleSize(category), innerPnt);
+        //mainCanvas.drawCircle(getCirclePosX(category), getCirclePosY(index), getCircleSize(category), outerPaint);
+        setNodeCircle(index, category);
     }
 
     private int getCirclePosX(Category category) {
@@ -179,6 +246,55 @@ public class RoadmapDrawer extends View {
         else {
             return dpToPx(8);
         }
+    }
+
+    private int getColorBySize(Category category) {
+        if(category == Category.LARGE) {
+            return getResources().getColor(R.color.roadmap_color_large);
+        }
+        else if(category == Category.MIDDLE) {
+            return getResources().getColor(R.color.roadmap_color_middle);
+        }
+        else {
+            return getResources().getColor(R.color.roadmap_color_small);
+        }
+    }
+
+    private void setNodeCircle(int index, Category category) {
+        ImageView imageView = imageViewList.get(index);
+        int circleSize = getCircleSize(category) + dpToPx(2);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(circleSize * 2, circleSize * 2);
+        imageView.setLayoutParams(params);
+        imageView.setX(getCirclePosX(category) - circleSize);
+        imageView.setY(getCirclePosY(index) - circleSize);
+
+        GradientDrawable circleDrawable = (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.circle);
+        if(!roadMap.get(index).isLocked())
+            circleDrawable.setColor(getColorBySize(category));
+        else
+            circleDrawable.setColor(Color.WHITE);
+        imageView.setImageDrawable(circleDrawable);
+
+        if (category == Category.SMALL) {
+            imageView.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    RoadMapStep step = roadMap.get(index);
+                    if(!step.isCompleted()) {
+                        circleDrawable.setColor(getResources().getColor(R.color.roadmap_color_complete));
+                        step.setCompleted(true);
+                    }
+                    else {
+                        circleDrawable.setColor(getColorBySize(category));
+                        step.setCompleted(false);
+                    }
+                    imageView.setImageDrawable(circleDrawable);
+                }
+            });
+        }
+    }
+    private void checkMiddleLevelStep() {
+        // TODO: 하위 단계들이 모두 complete 되면 middle level을 complete하고 색상 변경 처리
     }
 
     private int getCirclePosY(int index) {

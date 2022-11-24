@@ -33,11 +33,17 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
-            android:id="@+id/roadmap_container"
-            android:orientation="vertical"
+
+        <FrameLayout
+            android:id="@+id/roadmap_frame_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </LinearLayout>
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/roadmap_container"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </LinearLayout>
+        </FrameLayout>
     </ScrollView>
 </LinearLayout>

@@ -3,6 +3,8 @@ package com.example.graduationproject;
 public class RoadMapStep {
     private String name;
     private boolean locked;
+
+    private boolean completed;
     private RoadmapDrawer.Category category;
     private int posX;
     private int posY;
@@ -45,5 +47,13 @@ public class RoadMapStep {
 
     public void setLocked(boolean locked) {
         this.locked = locked;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 }

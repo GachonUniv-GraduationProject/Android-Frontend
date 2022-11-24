@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 public class RoadmapFragment extends Fragment {
@@ -17,7 +18,8 @@ public class RoadmapFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_roadmap, container, false);
 
         LinearLayout roadmapContainer = view.findViewById(R.id.roadmap_container);
-        RoadmapDrawer drawer = new RoadmapDrawer(getActivity());
+        FrameLayout roadmapFrameContainer = view.findViewById(R.id.roadmap_frame_container);
+        RoadmapDrawer drawer = new RoadmapDrawer(getActivity(), roadmapFrameContainer);
         roadmapContainer.addView(drawer);
 
         return view;

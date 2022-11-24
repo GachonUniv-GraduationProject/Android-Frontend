@@ -13,7 +13,7 @@ public class RoadmapActivity extends AppCompatActivity {
         setContentView(R.layout.activity_roadmap);
 
         LinearLayout roadmapContainer = findViewById(R.id.roadmap_container);
-        RoadmapDrawer drawer = new RoadmapDrawer(this);
-        roadmapContainer.addView(drawer);
+        //RoadmapDrawer drawer = new RoadmapDrawer(this);
+        //roadmapContainer.addView(drawer);
     }
 }
