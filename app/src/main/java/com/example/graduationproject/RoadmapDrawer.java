@@ -54,13 +54,13 @@ public class RoadmapDrawer extends View {
         roadMap.add(new RoadMapStep("Test1-3", Category.MIDDLE, roadMap.get(0), false));
         roadMap.add(new RoadMapStep("Test1-4", Category.MIDDLE, roadMap.get(0), false));
         roadMap.add(new RoadMapStep("Test1-5", Category.MIDDLE, roadMap.get(0), false));
-        roadMap.add(new RoadMapStep("Test1-6", Category.MIDDLE, roadMap.get(0), false));
-        roadMap.add(new RoadMapStep("Test1-7", Category.MIDDLE, roadMap.get(0), false));
-        roadMap.add(new RoadMapStep("Test1-8", Category.MIDDLE, roadMap.get(0), false));
-        roadMap.add(new RoadMapStep("Test1-9", Category.MIDDLE, roadMap.get(0), false));
-        roadMap.add(new RoadMapStep("Test1-10", Category.MIDDLE, roadMap.get(0), true));
-        roadMap.add(new RoadMapStep("Test1-11", Category.MIDDLE, roadMap.get(0), true));
-        roadMap.add(new RoadMapStep("Test1-12", Category.MIDDLE, roadMap.get(0), true));
+        roadMap.add(new RoadMapStep("Test1-5-1", Category.SMALL, roadMap.get(6), false));
+        roadMap.add(new RoadMapStep("Test1-5-2", Category.SMALL, roadMap.get(6), false));
+        roadMap.add(new RoadMapStep("Test1-5-3", Category.SMALL, roadMap.get(6), false));
+        roadMap.add(new RoadMapStep("Test1-5-4", Category.SMALL, roadMap.get(6), false));
+        roadMap.add(new RoadMapStep("Test1-6", Category.MIDDLE, roadMap.get(0), true));
+        roadMap.add(new RoadMapStep("Test1-7", Category.MIDDLE, roadMap.get(0), true));
+        roadMap.add(new RoadMapStep("Test1-8", Category.MIDDLE, roadMap.get(0), true));
 
         initView(context, roadmapContainer);
         initCanvas();

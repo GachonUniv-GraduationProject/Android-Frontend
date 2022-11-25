@@ -22,18 +22,18 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:text="Your Field"
+                android:text="현재 개발자님의 분야는..."
                 android:textSize="18dp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/primary_color"/>
 
             <TextView
                 android:id="@+id/text_fieldText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Frontend"
+                android:layout_gravity="right"
+                android:text="프론트엔드에요."
                 android:textSize="15dp"
                 android:textColor="@color/black"
-                android:layout_marginLeft="30dp"
                 android:layout_marginBottom="10dp"
                 app:layout_constraintTop_toBottomOf="@id/text_yourField" />
         </LinearLayout>
@@ -64,18 +64,21 @@
         android:background="#000000"
         app:layout_constraintTop_toBottomOf="@id/text_fieldText" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="다른 분야와 진행도를 비교해보세요."
+        android:textColor="@color/primary_color"
+        android:textSize="16dp"/>
+
     <com.github.mikephil.charting.charts.BarChart
         android:layout_marginTop="20dp"
         android:layout_height="300dp"
         android:layout_width="match_parent"
         android:id="@+id/chart"
         android:layout_marginBottom="10dp"/>
-
-    <TextView
-        android:id="@+id/x_labels"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="X1"/>
 
     <View
         android:layout_width="match_parent"
@@ -90,21 +93,16 @@
         android:paddingLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:text="Next recommended activity"
-        android:textSize="18dp"
-        android:textColor="@color/black"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2px"
-        android:background="#000000"
-        app:layout_constraintTop_toBottomOf="@id/recommendActivity_title" />
+        android:text="다음으로 추천하는 활동이에요"
+        android:textSize="16dp"
+        android:textColor="@color/primary_color"/>
 
     <TextView
         android:id="@+id/recommendActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="10dp"
         android:text="- example"
         android:textColor="@color/black"
         android:textSize="15dp"/>

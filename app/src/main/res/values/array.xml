@@ -5,4 +5,10 @@
         <item>@color/roadmap_color_middle</item>
         <item>@color/roadmap_color_large</item>
     </array>
+    <array name="bar_chart_color_arr">
+        <item>@color/primary_color</item>
+        <item>#648DF8</item>
+        <item>#3BBAFF</item>
+        <item>@color/primary_color_pressed</item>
+    </array>
 </resources>

@@ -69,13 +69,34 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="15dp">
                     <RadioButton
-                        android:id="@+id/field_radio_button_true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:scaleX="0.9"
-                        android:scaleY="0.9"
                         android:paddingLeft="10dp"
-                        android:text="앱 개발자"
+                        android:text="모바일 애플리케이션"
+                        android:textSize="16dp"/>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="게임"
+                        android:textSize="16dp"/>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="백엔드"
+                        android:textSize="16dp"/>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="딥러닝"
+                        android:textSize="16dp"/>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="기타"
                         android:textSize="16dp"/>
                 </RadioGroup>
             </LinearLayout>
@@ -116,6 +137,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="안드로이드 스튜디오"/>
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="XCode"/>
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kotlin"/>
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Swift"/>
                 </LinearLayout>
 
             </LinearLayout>
