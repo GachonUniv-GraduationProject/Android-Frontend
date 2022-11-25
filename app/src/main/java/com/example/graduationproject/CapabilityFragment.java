@@ -1,5 +1,6 @@
 package com.example.graduationproject;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -81,6 +83,15 @@ public class CapabilityFragment extends Fragment {
         }
 
         textView.setText(tmp);
+
+        Button myPageButton = view.findViewById(R.id.user_info_button);
+        myPageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myPageIntent = new Intent(getContext(), UserInfoActivity.class);
+                startActivity(myPageIntent);
+            }
+        });
 
         return view;
     }
