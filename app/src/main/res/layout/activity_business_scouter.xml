@@ -12,14 +12,13 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:padding="15dp"
-        android:background="@color/primary_color"
         android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="필요하신 인재를 이렇게 추천드려요."
             android:textSize="20dp"
-            android:textColor="@color/white"
+            android:textColor="@color/primary_color"
             android:textStyle="bold"/>
         <View
             android:layout_width="0dp"
@@ -29,9 +28,14 @@
             android:id="@+id/filter_button"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@color/primary_color"
             android:background="@drawable/filter"/>
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/primary_color_pressed"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
