@@ -124,6 +124,7 @@
                     android:layout_marginHorizontal="15dp"
                     android:layout_marginTop="10dp"
                     android:padding="5dp"
+                    android:gravity="top"
                     android:textSize="13dp"
                     android:background="@drawable/custom_input"/>
             </LinearLayout>
@@ -161,6 +162,7 @@
                     android:layout_marginHorizontal="15dp"
                     android:layout_marginTop="10dp"
                     android:padding="5dp"
+                    android:gravity="top"
                     android:textSize="13dp"
                     android:background="@drawable/custom_input"/>
             </LinearLayout>

@@ -64,5 +64,10 @@
         android:text="가천대학교 졸업작품 프로젝트"
         android:layout_margin="5dp"/>
 
+    <Button
+        android:id="@+id/test_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="기업 화면 테스트"/>
 
 </LinearLayout>
