@@ -7,13 +7,17 @@ import com.google.gson.annotations.SerializedName;
 
 public class UserData implements Parcelable {
     @SerializedName("id")
-    private String id;
+    private int id;
     @SerializedName("email")
     private String email;
     @SerializedName("username")
     private String username;
     @SerializedName("password")
     private String password;
+    @SerializedName("phone")
+    private String phone;
+    @SerializedName("display_name")
+    private String displayName;
 
     public UserData(String username, String password) {
         this.username = username;
@@ -21,25 +25,26 @@ public class UserData implements Parcelable {
         email = "";
     }
 
-    public UserData(String username, String id, String password, String email) {
-        this.id = id;
+    public UserData(String username, String password, String email, String phone, String displayName) {
         this.email = email;
         this.password = password;
         this.username = username;
+        this.phone = phone;
+        this.displayName = displayName;
     }
 
     public UserData(Parcel in) {
-        id = in.readString();
+        id = in.readInt();
         email = in.readString();
         username = in.readString();
         password = in.readString();
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -84,7 +89,7 @@ public class UserData implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
+        dest.writeInt(id);
         dest.writeString(email);
         dest.writeString(username);
         dest.writeString(password);

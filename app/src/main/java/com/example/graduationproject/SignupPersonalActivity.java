@@ -1,6 +1,8 @@
 package com.example.graduationproject;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -26,50 +28,47 @@ public class SignupPersonalActivity extends AppCompatActivity {
         EditText idEditText         = findViewById(R.id.signup_id_edittext);
         EditText emailEditText      = findViewById(R.id.signup_email_edittext);
         EditText passwordEditText   = findViewById(R.id.signup_password_edittext);
+        EditText phoneEditText      = findViewById(R.id.signup_phone_edittext);
 
         Button signupBtn=findViewById(R.id.signup_button);
 
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*String name = nameEditText.getText().toString();
+                String name = nameEditText.getText().toString();
                 String id = idEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
                 String email = emailEditText.getText().toString();
-                UserData userData = new UserData(name, id, password, email);
+                String phone = phoneEditText.getText().toString();
+                UserData userData = new UserData(id, password, email, phone, name);
 
                 RetrofitService service = RetrofitClient.getRetrofitService();
-                Call<LoginData> signup = service.signup(userData);
-                signup.enqueue(new Callback<LoginData>() {
+                Call<UserData> signup = service.signup(userData, "True");
+                signup.enqueue(new Callback<UserData>() {
                     @Override
-                    public void onResponse(Call<LoginData> call, Response<LoginData> response) {
+                    public void onResponse(Call<UserData> call, Response<UserData> response) {
                         if(response.isSuccessful()) {
-                            LoginData.currentLoginData = response.body();
                             String msg = "<Sign up-Personal> Success\n";
-                            msg += LoginData.currentLoginData.getUser().getUsername() + " / " + LoginData.currentLoginData.getToken();
                             Log.d("Server Test", msg);
                             showToast("Sign up success!");
 
-                            Intent nextActivity = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(nextActivity);
+                            Intent surveyActivity = new Intent(getApplicationContext(), PersonalSurveyActivity.class);
+                            startActivity(surveyActivity);
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<LoginData> call, Throwable t) {
+                    public void onFailure(Call<UserData> call, Throwable t) {
                         Toast.makeText(SignupPersonalActivity.this, "Sign up Failed.", Toast.LENGTH_SHORT).show();
                         Log.d("Server Test", "<Sign up-Personal> onFailure: " + t.getMessage());
                     }
-                });*/
-                Intent surveyActivity = new Intent(getApplicationContext(), PersonalSurveyActivity.class);
-                startActivity(surveyActivity);
+                });
             }
         });
 
     }
     public void showToast(String msg){
         Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.TOP, 0, 200);
         toast.show();
     }
 }

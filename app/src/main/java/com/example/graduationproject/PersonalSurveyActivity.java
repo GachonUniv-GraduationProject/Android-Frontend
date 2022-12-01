@@ -2,8 +2,10 @@ package com.example.graduationproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -13,6 +15,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.Toast;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PersonalSurveyActivity extends AppCompatActivity {
 
@@ -113,5 +123,9 @@ public class PersonalSurveyActivity extends AppCompatActivity {
         otherQuestion.setQuestion(currentQuestion, "앱 개발에서 경험한 것이나 자신있는 것을 골라주세요.");
         surveyScrollContainer.addView(otherQuestion);
         otherQuestion.startAnimation(questionEnable);
+    }
+    public void showToast(String msg){
+        Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
+        toast.show();
     }
 }

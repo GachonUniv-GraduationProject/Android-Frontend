@@ -1,7 +1,9 @@
 package com.example.graduationproject;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -26,6 +28,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText idEditText;
     private EditText passwordEditText;
     private CheckBox autoLoginCheckbox;
+
+    private LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +78,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void requestLogin(UserData userData) {
+        loadingDialog = new LoadingDialog(this);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        loadingDialog.setCancelable(false);
+        loadingDialog.show();
+
         RetrofitService service = RetrofitClient.getRetrofitService();
         Call<LoginData> login = service.login(userData);
         login.enqueue(new Callback<LoginData>() {
@@ -86,6 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d("Server Test", msg);
                     showToast("Login Success!");
                     loginSuccess(userData);
+                    loadingDialog.dismiss();
                 }
                 else {
                     Log.d("Server Test", "[Code] " + response.code());
