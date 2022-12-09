@@ -3,18 +3,27 @@ package com.example.graduationproject;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class TalentRecommendFoldingCell extends LinearLayout {
 
     private boolean detailedOpened = false;
     private LinearLayout detailedContainer;
-    private Animation containerDisableAnim, containerEnableAnim, triangleRotationAnim;
     private ImageView foldNotifyImage;
+
+    private TextView nameTextview;
+    private TextView fieldTextview;
+    private TextView skillTextview;
+    private TextView experienceTextview;
+
+    private String name;
+    private String email;
+    private String field;
+    private String[] skills;
+    private String experience;
 
     public TalentRecommendFoldingCell(Context context) {
         super(context);
@@ -24,9 +33,10 @@ public class TalentRecommendFoldingCell extends LinearLayout {
 
         detailedContainer = findViewById(R.id.detailed_container);
         foldNotifyImage = findViewById(R.id.fold_notify_imageview);
-        containerDisableAnim = AnimationUtils.loadAnimation(getContext(), R.anim.container_disable);
-        containerEnableAnim = AnimationUtils.loadAnimation(getContext(), R.anim.container_enable);
-        triangleRotationAnim = AnimationUtils.loadAnimation(getContext(), R.anim.rotation_180);
+        nameTextview = findViewById(R.id.personal_name_textview);
+        fieldTextview = findViewById(R.id.personal_field_textview);
+        skillTextview = findViewById(R.id.personal_skill_textview);
+        experienceTextview = findViewById(R.id.personal_experience_textview);
 
         setOnClickListener(new OnClickListener() {
             @Override
@@ -35,18 +45,6 @@ public class TalentRecommendFoldingCell extends LinearLayout {
             }
         });
 
-        Button detailButton = findViewById(R.id.detailed_info_button);
-        detailButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String name = "홍길동", email = "abc@gmail.com";
-                DetailedTargetInfoDialog detailedTargetInfoDialog = new DetailedTargetInfoDialog(getContext(), name, email);
-                detailedTargetInfoDialog.show();
-                detailedTargetInfoDialog.setFieldTextview("안드로이드 앱 개발");
-                detailedTargetInfoDialog.setSkillTextview(new String[] {"Java", "Kotlin", "Retrofit2"});
-                detailedTargetInfoDialog.setActivityTextview("Java, Retrofit을 활용한 AAA 프로젝트를 경험함.");
-            }
-        });
     }
 
     private void setDetailedInfo() {
@@ -60,5 +58,46 @@ public class TalentRecommendFoldingCell extends LinearLayout {
             detailedContainer.setVisibility(View.GONE);
             foldNotifyImage.setRotation(0);
         }
+    }
+
+    private String getArrangedExperience(String sentence) {
+        String result = sentence.replaceAll(".", ".\n");
+
+        return result;
+    }
+
+    public void updateUserInfo(String name, String email, String field, String[] skill, String experience) {
+        this.name = name;
+        this.email = email;
+        this.field = field;
+        this.skills = skill;
+        this.experience = experience;
+
+        nameTextview.setText(name);
+        fieldTextview.setText(field);
+        String skillText = "";
+        for(int i = 0; i < skill.length; i++) {
+            skillText += skill[i];
+            if(i < skill.length - 1)
+                skillText += ", ";
+        }
+        skillTextview.setText(skillText);
+        experienceTextview.setText(experience);
+
+        setDetailInfo();
+    }
+
+    private void setDetailInfo() {
+        Button detailButton = findViewById(R.id.detailed_info_button);
+        detailButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DetailedTargetInfoDialog detailedTargetInfoDialog = new DetailedTargetInfoDialog(getContext(), name, email);
+                detailedTargetInfoDialog.show();
+                detailedTargetInfoDialog.setFieldTextview(field);
+                detailedTargetInfoDialog.setSkillTextview(skills);
+                detailedTargetInfoDialog.setActivityTextview(experience);
+            }
+        });
     }
 }

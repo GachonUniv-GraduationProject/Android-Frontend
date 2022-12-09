@@ -6,8 +6,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +18,23 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Dimension;
 import androidx.core.content.ContextCompat;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RoadmapDrawer extends View {
     private Canvas mainCanvas;
@@ -35,39 +48,99 @@ public class RoadmapDrawer extends View {
 
     private int[] roadmapColor;
 
+    private String field;
     private List<RoadMapStep> roadMap;
     private List<ImageView> imageViewList;
     private List<TextView> textViewList;
-    public enum Category {SMALL, MIDDLE, LARGE};
+    public enum Category {
+        LARGE(0), MIDDLE(1), SMALL(2);
+
+        private final int value;
+        private Category(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
     private final int INTERVAL = 50;
 
     private LinkDialog linkDialog;
+    private LoadingDialog loadingDialog;
 
     public RoadmapDrawer(Context context, FrameLayout roadmapContainer) {
         super(context);
 
         roadMap = new ArrayList<>();
-        roadMap.add(new RoadMapStep("Test1", Category.LARGE, null, false));
-        roadMap.add(new RoadMapStep("Test1-1", Category.MIDDLE, roadMap.get(0), false));
-        roadMap.add(new RoadMapStep("Test1-1-1", Category.SMALL, roadMap.get(1), false));
-        roadMap.add(new RoadMapStep("Test1-2", Category.MIDDLE, roadMap.get(0), false));
-        roadMap.add(new RoadMapStep("Test1-3", Category.MIDDLE, roadMap.get(0), false));
-        roadMap.add(new RoadMapStep("Test1-4", Category.MIDDLE, roadMap.get(0), false));
-        roadMap.add(new RoadMapStep("Test1-5", Category.MIDDLE, roadMap.get(0), false));
-        roadMap.add(new RoadMapStep("Test1-5-1", Category.SMALL, roadMap.get(6), false));
-        roadMap.add(new RoadMapStep("Test1-5-2", Category.SMALL, roadMap.get(6), false));
-        roadMap.add(new RoadMapStep("Test1-5-3", Category.SMALL, roadMap.get(6), false));
-        roadMap.add(new RoadMapStep("Test1-5-4", Category.SMALL, roadMap.get(6), false));
-        roadMap.add(new RoadMapStep("Test1-6", Category.MIDDLE, roadMap.get(0), true));
-        roadMap.add(new RoadMapStep("Test1-7", Category.MIDDLE, roadMap.get(0), true));
-        roadMap.add(new RoadMapStep("Test1-8", Category.MIDDLE, roadMap.get(0), true));
 
-        initView(context, roadmapContainer);
-        initCanvas();
+        loadRoadmapData(roadmapContainer);
     }
 
-    private void initView(Context context, FrameLayout roadmapFrameContainer) {
-        this.context = context;
+    private void loadRoadmapData(FrameLayout roadmapContainer) {
+        loadingDialog = new LoadingDialog(getContext());
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        loadingDialog.setCancelable(false);
+        loadingDialog.show();
+
+        int id = LoginData.currentLoginData.getUser().getId();
+        field = LoginData.currentLoginData.getField();
+        RetrofitService service = RetrofitClient.getRetrofitService();
+        Call<Object> getRoadmap = service.getRoadmap(id, field);
+        getRoadmap.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                if(response.isSuccessful()) {
+                    String roadmapJson = new Gson().toJson(response.body());
+                    initRoadmapData(roadmapJson);
+                    initView(roadmapContainer);
+                    initCanvas();
+                    loadingDialog.dismiss();
+                }
+                else {
+                    //TODO : 로딩 실패 시 오류메시지 출력 후 다른 fragment로 이동
+                    Log.d("Apply Complete Roadmap", "Failed to apply " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                //TODO : 로딩 실패 시 오류메시지 출력 후 다른 fragment로 이동
+                Log.d("Apply Complete Roadmap", "Failed to apply " + t.getStackTrace());
+            }
+        });
+    }
+    private RoadMapStep getRoadmapStepByName(String name) {
+        for(RoadMapStep step : roadMap) {
+            if(step.getName().equals(name)) {
+                return step;
+            }
+        }
+
+        return null;
+    }
+
+    private void initRoadmapData(String json) {
+        JsonParser parser = new JsonParser();
+        JsonObject rootObject = (JsonObject) parser.parse(json);
+        JsonArray rootArray = (JsonArray) rootObject.get("skill");
+        for(int i = 0; i < rootArray.size(); i++) {
+            JsonObject stepObj = (JsonObject) rootArray.get(i);
+            String name = stepObj.get("name").getAsString();
+            int level = stepObj.get("level").getAsInt();
+            String base = stepObj.get("base").getAsString();
+            RoadMapStep baseStep = getRoadmapStepByName(base);
+            boolean locked = stepObj.get("locked").getAsBoolean();
+            boolean completed = stepObj.get("completed").getAsBoolean();
+            if(level > 2) // TODO: 임시방편, 추후에 다단계 로드맵을 어떻게 구성할지 구조를 고민해봐야 함
+                level = 2;
+
+            roadMap.add(new RoadMapStep(name, Category.values()[level], baseStep, locked, completed, this));
+        }
+    }
+
+    private void initView(FrameLayout roadmapFrameContainer) {
+        this.context = getContext();
         this.roadmapFrameContainer = roadmapFrameContainer;
         imageViewList = new ArrayList<>();
         textViewList = new ArrayList<>();
@@ -172,6 +245,7 @@ public class RoadmapDrawer extends View {
             @Override
             public void onClick(View view) {
                 linkDialog = new LinkDialog(context);
+                linkDialog.setSkillName(textView.getText().toString());
                 linkDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 linkDialog.setContentView(R.layout.dialog_link_to_reference);
 
@@ -181,10 +255,7 @@ public class RoadmapDrawer extends View {
     }
 
     private void showLinkDialog() {
-        String[] titles = {"교육자료 1", "교육자료 2"};
-        String[] urls = {"https://www.youtube.com/", "https://www.youtube.com/"};
-        linkDialog.setLinkSets(titles, urls);
-
+        linkDialog.loadUrls();
         linkDialog.show();
     }
 
@@ -260,6 +331,52 @@ public class RoadmapDrawer extends View {
         }
     }
 
+    private void applyCompleteOnServer(String field, String skill, RoadMapStep step, boolean isCompleted, int index) {
+        if(isCompleted) {
+            loadingDialog = new LoadingDialog(getContext());
+            loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            loadingDialog.setCancelable(false);
+            loadingDialog.show();
+
+            int id = LoginData.currentLoginData.getUser().getId();
+            JsonObject skillObj = new JsonObject();
+            skillObj.addProperty("name", skill);
+            RetrofitService service = RetrofitClient.getRetrofitService();
+            Call<Object> getRoadmap = service.putRoadmap(id, field, skillObj);
+            getRoadmap.enqueue(new Callback<Object>() {
+                @Override
+                public void onResponse(Call<Object> call, Response<Object> response) {
+                    if (response.isSuccessful()) {
+                        GradientDrawable circleDrawable = (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.circle);
+                        if (isCompleted) {
+                            circleDrawable.setColor(getResources().getColor(R.color.roadmap_color_complete));
+                            imageViewList.get(index).setImageDrawable(circleDrawable);
+                            step.setCompleted(true);
+                            step.getBaseStep().checkSubSteps();
+                        } else {
+                            //circleDrawable.setColor(getColorBySize(category));
+                            //step.setCompleted(false);
+                            Toast.makeText(getContext(), "취소는 불가능합니다.", Toast.LENGTH_SHORT).show();
+                        }
+                        loadingDialog.dismiss();
+                    } else {
+                        //TODO : 로딩 실패 시 오류메시지 출력 후 다른 fragment로 이동
+                        Log.d("Apply Complete Roadmap", "Failed to apply " + response.code());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Object> call, Throwable t) {
+                    //TODO : 로딩 실패 시 오류메시지 출력 후 다른 fragment로 이동
+                    Log.d("Apply Complete Roadmap", "Failed to apply " + t.getStackTrace());
+                }
+            });
+        }
+        else {
+            Toast.makeText(getContext(), "취소는 불가능합니다.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void setNodeCircle(int index, Category category) {
         ImageView imageView = imageViewList.get(index);
         int circleSize = getCircleSize(category) + dpToPx(2);
@@ -269,8 +386,12 @@ public class RoadmapDrawer extends View {
         imageView.setY(getCirclePosY(index) - circleSize);
 
         GradientDrawable circleDrawable = (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.circle);
-        if(!roadMap.get(index).isLocked())
+        RoadMapStep step = roadMap.get(index);
+        if(!step.isLocked()) {
             circleDrawable.setColor(getColorBySize(category));
+            if(step.isCompleted() && step.getCategory() == Category.SMALL)
+                circleDrawable.setColor(getResources().getColor(R.color.roadmap_color_complete));
+        }
         else
             circleDrawable.setColor(Color.WHITE);
         imageView.setImageDrawable(circleDrawable);
@@ -280,28 +401,35 @@ public class RoadmapDrawer extends View {
                 @Override
                 public void onClick(View view) {
                     RoadMapStep step = roadMap.get(index);
-                    if(!step.isCompleted()) {
-                        circleDrawable.setColor(getResources().getColor(R.color.roadmap_color_complete));
-                        step.setCompleted(true);
-                    }
-                    else {
-                        circleDrawable.setColor(getColorBySize(category));
-                        step.setCompleted(false);
-                    }
-                    imageView.setImageDrawable(circleDrawable);
+                    applyCompleteOnServer(field, step.getName(), step, !step.isCompleted(), index);
                 }
             });
         }
     }
-    private void checkMiddleLevelStep() {
-        // TODO: 하위 단계들이 모두 complete 되면 middle level을 complete하고 색상 변경 처리
-    }
 
-    private int getCirclePosY(int index) {
-        return (index + 1) * dpToPx(INTERVAL);
+    public void openNextLevel(String name) {
+        RoadMapStep step = null;
+        for(int i = 0; i < roadMap.size(); i++) {
+            if(roadMap.get(i).getName().equals(name))
+                step = roadMap.get(i);
+        }
+
+        if(step == null)
+            return;
+
+        step.setLocked(false);
+        for(RoadMapStep childStep : step.getChildrenSteps()) {
+            childStep.setLocked(false);
+        }
+
+        invalidate();
     }
 
     private int dpToPx(int dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
+    }
+
+    private int getCirclePosY(int index) {
+        return (index + 1) * dpToPx(INTERVAL);
     }
 }

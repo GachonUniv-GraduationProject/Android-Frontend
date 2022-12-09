@@ -9,28 +9,37 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
-public class SurveyOtherQuestion extends LinearLayout {
+import java.util.ArrayList;
+import java.util.List;
+
+public class SurveyOtherCheckboxQuestion extends LinearLayout {
 
     private CheckBox[] questionCheckboxArray;
     private TextView questionNumberText;
     private TextView questionSentenceText;
     private Button completeButton;
+    private SurveyListener surveyListener;
 
     private int checkedCount = 0;
 
-    public SurveyOtherQuestion(Context context, String[] items) {
+    public SurveyOtherCheckboxQuestion(Context context, String[] items) {
         super(context);
 
         init(context, items);
+    }
+
+    public void setSurveyListener(SurveyListener surveyListener) {
+        this.surveyListener = surveyListener;
     }
 
     private void init(Context context, String[] items) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.survey_other_questions, this, true);
 
-        LinearLayout questionCheckboxContainer = findViewById(R.id.question_checkbox_container);
+        LinearLayout questionCheckboxContainer = findViewById(R.id.question_content_container);
         questionCheckboxArray = new CheckBox[items.length];
 
         questionNumberText = findViewById(R.id.question_number_text);
@@ -65,7 +74,13 @@ public class SurveyOtherQuestion extends LinearLayout {
         completeButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                List<String> contents = new ArrayList<>();
+                for(int i = 0; i < questionCheckboxArray.length; i++) {
+                    if(questionCheckboxArray[i].isChecked())
+                        contents.add(questionCheckboxArray[i].getText().toString());
+                }
 
+                surveyListener.onComplete(contents);
             }
         });
     }
@@ -80,9 +95,12 @@ public class SurveyOtherQuestion extends LinearLayout {
         completeButton.startAnimation(buttonEnable);
         completeButton.setVisibility(VISIBLE);
     }
-    private void disableConfirmButton(Context context) {
+    public void disableConfirmButton(Context context) {
         Animation buttonDisable = AnimationUtils.loadAnimation(context, R.anim.button_disable);
         completeButton.startAnimation(buttonDisable);
         completeButton.setVisibility(INVISIBLE);
+    }
+    public void hideConfirmButton() {
+        completeButton.setVisibility(GONE);
     }
 }

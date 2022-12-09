@@ -72,6 +72,14 @@ public class UserData implements Parcelable {
         this.password = password;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
     public static final Creator<UserData> CREATOR = new Creator<UserData>() {
         @Override
         public UserData createFromParcel(Parcel parcel) {

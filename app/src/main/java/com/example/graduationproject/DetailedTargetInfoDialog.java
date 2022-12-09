@@ -2,6 +2,7 @@ package com.example.graduationproject;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -38,6 +39,16 @@ public class DetailedTargetInfoDialog extends Dialog {
         emailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String mailName = "[Devigation] ";
+                mailName += LoginData.currentLoginData.getUser().getDisplayName() + "에서 관심이 있어 연락드립니다.";
+
+                String[] address = {email};
+
+                Intent mailIntent = new Intent(Intent.ACTION_SEND);
+                mailIntent.setType("plain/text");
+                mailIntent.putExtra(Intent.EXTRA_EMAIL, address);
+                mailIntent.putExtra(Intent.EXTRA_SUBJECT, mailName);
+                getContext().startActivity(mailIntent);
                 dismiss();
             }
         });

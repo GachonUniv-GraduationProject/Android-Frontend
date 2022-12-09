@@ -18,9 +18,13 @@ import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
 
+    static MainActivity mainActivity;
+
     TrendFragment trendFragment;
     RoadmapFragment roadmapFragment;
     CapabilityFragment capabilityFragment;
+
+    private BackKeyHandler backKeyHandler = new BackKeyHandler(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,5 +54,10 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+        mainActivity = this;
+    }
+    @Override
+    public void onBackPressed() {
+        backKeyHandler.onBackPressed();
     }
 }

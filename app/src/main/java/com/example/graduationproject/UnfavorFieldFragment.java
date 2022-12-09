@@ -15,11 +15,14 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.List;
+
 public class UnfavorFieldFragment extends Fragment {
 
     private LinearLayout unfavorFieldContainer;
-
     private FloatingActionButton addUnfavorFab;
+
+    private List<String> fields;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,14 +31,14 @@ public class UnfavorFieldFragment extends Fragment {
 
         unfavorFieldContainer = view.findViewById(R.id.unfavor_field_container);
 
-        String[] fields = {"분야 4", "분야 5"};
+        /*String[] fields = {"분야 4", "분야 5"};
         FavorFieldLayout favorFieldLayout = new FavorFieldLayout(getContext());
         favorFieldLayout.setFieldText(fields[0]);
         unfavorFieldContainer.addView(favorFieldLayout);
 
         FavorFieldLayout favorFieldLayout1 = new FavorFieldLayout(getContext());
         favorFieldLayout1.setFieldText(fields[1]);
-        unfavorFieldContainer.addView(favorFieldLayout1);
+        unfavorFieldContainer.addView(favorFieldLayout1);*/
 
         addUnfavorFab = view.findViewById(R.id.unfavor_add_fab);
         addUnfavorFab.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +62,20 @@ public class UnfavorFieldFragment extends Fragment {
                 dialog.show();
             }
         });
+        updateFields();
 
         return view;
+    }
+
+    public void setFields(List<String> fields) {
+        this.fields = fields;
+    }
+
+    public void updateFields() {
+        for(int i = 0; i < fields.size(); i++) {
+            FavorFieldLayout favorFieldLayout = new FavorFieldLayout(getContext());
+            favorFieldLayout.setFieldText(fields.get(i));
+            unfavorFieldContainer.addView(favorFieldLayout);
+        }
     }
 }

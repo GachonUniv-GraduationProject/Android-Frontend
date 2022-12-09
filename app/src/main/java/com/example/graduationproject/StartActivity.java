@@ -10,6 +10,8 @@ import android.widget.Button;
 
 public class StartActivity extends AppCompatActivity {
 
+    static StartActivity startActivity;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,5 +35,6 @@ public class StartActivity extends AppCompatActivity {
             }
         });
 
+        startActivity = this;
     }
 }

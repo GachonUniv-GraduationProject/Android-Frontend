@@ -1,6 +1,7 @@
 package com.example.graduationproject;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
@@ -174,14 +175,20 @@ public class TrendFragment extends Fragment {
             int val = (int)Math.round(entryDetail.getValue());
             if(val <= otherCriteria)
                 othersCount += val;
-            else
-                trend.add(new PieEntry(val, entryDetail.getKey()));
+            else {
+                if(entryDetail.getKey().equals("Java"))
+                    trend.add(new PieEntry(val, "JavaScript"));
+                else
+                    trend.add(new PieEntry(val, entryDetail.getKey()));
+            }
         }
         if(othersCount > 0)
             trend.add(new PieEntry(othersCount, "기타"));
 
         PieDataSet pieDataSet = new PieDataSet(trend, "Trend");
         pieDataSet.setValueFormatter(new PercentFormatter(pieChart));
+        Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "d2coding.ttf");
+        pieDataSet.setValueTypeface(tf);
         drawPieChart(pieDataSet);
         /*for(Map.Entry<String, Map<String, Integer>> entry : trendMap.entrySet()) {
             String entryJson = gson.toJson(entry.getValue());

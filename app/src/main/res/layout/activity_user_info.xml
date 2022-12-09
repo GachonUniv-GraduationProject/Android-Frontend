@@ -8,14 +8,31 @@
     android:padding="10dp"
     tools:context=".UserInfoActivity">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:text="내 정보"
-        android:textStyle="bold"
-        android:textColor="@color/primary_color"
-        android:textSize="20dp"/>
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="내 정보"
+            android:textStyle="bold"
+            android:textColor="@color/primary_color"
+            android:textSize="20dp"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/logout_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="로그아웃"
+            android:background="@color/background"
+            style="?android:attr/borderlessButtonStyle"/>
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -86,6 +103,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_span="3"
                     android:padding="10dp"
+                    android:checked="true"
                     android:text="기업에게 내 정보 공개"
                     android:textSize="12dp"/>
             </TableRow>

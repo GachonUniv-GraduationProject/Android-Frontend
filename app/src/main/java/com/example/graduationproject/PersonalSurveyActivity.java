@@ -3,22 +3,27 @@ package com.example.graduationproject;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.inputmethod.InputMethod;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,6 +37,8 @@ public class PersonalSurveyActivity extends AppCompatActivity {
     private Animation questionEnable;
 
     private int currentQuestion = 1;
+    private int currentUserId;
+    private int loadingState = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +47,8 @@ public class PersonalSurveyActivity extends AppCompatActivity {
 
         questionEnable = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.question_enable);
         surveyScrollContainer = findViewById(R.id.survey_scroll_container);
+
+        currentUserId = getIntent().getIntExtra("newUserId", 0);
 
         setFirstQuestion();
     }
@@ -77,12 +86,12 @@ public class PersonalSurveyActivity extends AppCompatActivity {
                 }
                 groupQuestion1.clearAnimation();
                 currentQuestion++;
-                setDescriptiveQuestion(2);
+                setDescriptiveQuestion(2, "");
             }
         });
     }
 
-    private void setDescriptiveQuestion(int question) {
+    private void setDescriptiveQuestion(int question, String priorAnswer) {
         LinearLayout groupQuestion;
         EditText answerEditText;
         if (question == 2) {
@@ -106,10 +115,11 @@ public class PersonalSurveyActivity extends AppCompatActivity {
                         groupQuestion.clearAnimation();
                         currentQuestion++;
                         if (question == 2) {
-                            setDescriptiveQuestion(3);
+                            setDescriptiveQuestion(3, answerEditText.getText().toString());
                         }
                         else {
-                            setOtherQuestions();
+                            //setOtherQuestions();
+                            analyzeAnswers(priorAnswer, answerEditText.getText().toString());
                         }
                     }
                 }
@@ -117,10 +127,106 @@ public class PersonalSurveyActivity extends AppCompatActivity {
         });
     }
 
-    private void setOtherQuestions() {
-        String[] sample = {"안드로이드", "IOS", "Kotlin", "Swift"};
-        SurveyOtherQuestion otherQuestion = new SurveyOtherQuestion(this, sample);
-        otherQuestion.setQuestion(currentQuestion, "앱 개발에서 경험한 것이나 자신있는 것을 골라주세요.");
+    private JsonObject getJsonContent(String type, String sentence) {
+        JsonObject content = new JsonObject();
+        content.addProperty("type", type);
+        content.addProperty("data", sentence);
+        return content;
+    }
+
+    private void analyzeAnswers(String sentenceQ1, String sentenceQ2) {
+        LoadingDialog loadingDialog = new LoadingDialog(this);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        loadingDialog.setCancelable(false);
+        loadingDialog.show();
+        sentenceQ1 = sentenceQ1.trim();
+        sentenceQ2 = sentenceQ2.trim();
+
+        RetrofitService service = RetrofitClient.getRetrofitService();
+        Call<Object> postPosNegSurvey = service.postPersonalSurvey(currentUserId, getJsonContent("NLP_POS_NEG", sentenceQ1));
+        postPosNegSurvey.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                if (response.isSuccessful()) {
+                    String posNegJson = new Gson().toJson(response.body());
+                    getPositiveFields(posNegJson);
+                    loadingState += 1;
+                    if(loadingState == 3)
+                        loadingDialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+
+        Call<Object> postFieldSurvey = service.postPersonalSurvey(currentUserId, getJsonContent("NLP_FIELD", sentenceQ2));
+        postFieldSurvey.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                if(response.isSuccessful()) {
+                    //String fieldJson = new Gson().toJson(response.body());
+                    loadingState += 2;
+                    if(loadingState == 3)
+                        loadingDialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getPositiveFields(String json) {
+        List<String> positiveFields = new ArrayList<>();
+        JsonParser parser = new JsonParser();
+        JsonObject rootObj = (JsonObject) parser.parse(json);
+        JsonArray classifyArray = (JsonArray) rootObj.get("classify");
+        for(int i = 0; i < classifyArray.size(); i++) {
+            JsonObject elementObj = classifyArray.get(i).getAsJsonObject();
+            if(elementObj.get("value").getAsInt() >= 0) {
+                positiveFields.add(elementObj.get("field").getAsString());
+            }
+        }
+
+        setOtherQuestions("가고자 하는 분야를 골라주세요.", positiveFields.toArray(new String[positiveFields.size()]));
+    }
+
+
+    private void setOtherQuestions(String question, String[] sample) {
+        SurveyOtherRadioButtonQuestion otherQuestion = new SurveyOtherRadioButtonQuestion(this, sample);
+        otherQuestion.setSurveyListener(new SurveyListener() {
+            @Override
+            public void onComplete(String content) {
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("name", content);
+
+                RetrofitService service = RetrofitClient.getRetrofitService();
+                Call<Object> postPersonalField = service.postPersonalField(currentUserId, content, jsonObject);
+                postPersonalField.enqueue(new Callback<Object>() {
+                    @Override
+                    public void onResponse(Call<Object> call, Response<Object> response) {
+                        if(response.isSuccessful()) {
+                            Toast.makeText(PersonalSurveyActivity.this, "설문조사 및 회원가입에 성공하였습니다.\n로그인하여 개발자의 길을 준비해보세요!", Toast.LENGTH_LONG).show();
+                            Intent loginActivity = new Intent(getApplicationContext(), LoginActivity.class);
+                            startActivity(loginActivity);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Object> call, Throwable t) {
+
+                    }
+                });
+            }
+            @Override
+            public void onComplete(List<String> content) { }
+        });
+        otherQuestion.setQuestion(currentQuestion, question);
         surveyScrollContainer.addView(otherQuestion);
         otherQuestion.startAnimation(questionEnable);
     }

@@ -2,6 +2,7 @@ package com.example.graduationproject;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
@@ -16,11 +17,14 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.List;
+
 public class FavorFieldFragment extends Fragment {
 
     private LinearLayout favorFieldContainer;
-
     private FloatingActionButton addFavorFab;
+
+    private List<String> fields;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,14 +33,14 @@ public class FavorFieldFragment extends Fragment {
 
         favorFieldContainer = view.findViewById(R.id.favor_field_container);
 
-        String[] fields = {"분야 1", "분야 2"};
+        /*String[] fields = {"분야 1", "분야 2"};
         FavorFieldLayout favorFieldLayout = new FavorFieldLayout(getContext());
         favorFieldLayout.setFieldText(fields[0]);
         favorFieldContainer.addView(favorFieldLayout);
 
         FavorFieldLayout favorFieldLayout1 = new FavorFieldLayout(getContext());
         favorFieldLayout1.setFieldText(fields[1]);
-        favorFieldContainer.addView(favorFieldLayout1);
+        favorFieldContainer.addView(favorFieldLayout1);*/
 
         addFavorFab = view.findViewById(R.id.favor_add_fab);
         addFavorFab.setOnClickListener(new View.OnClickListener() {
@@ -61,6 +65,22 @@ public class FavorFieldFragment extends Fragment {
             }
         });
 
+        updateFields();
+
         return view;
     }
+
+    public void setFields(List<String> fields) {
+        this.fields = fields;
+    }
+
+    public void updateFields() {
+        for(int i = 0; i < fields.size(); i++) {
+            FavorFieldLayout favorFieldLayout = new FavorFieldLayout(getContext());
+            favorFieldLayout.setFieldText(fields.get(i));
+            favorFieldContainer.addView(favorFieldLayout);
+        }
+    }
+
+
 }

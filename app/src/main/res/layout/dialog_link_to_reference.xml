@@ -12,7 +12,7 @@
         android:layout_marginBottom="20dp"
         android:gravity="center_horizontal"
         android:text="참고할 교육자료를 선택해주세요."
-        android:textSize="18dp"
+        android:textSize="16dp"
         android:textColor="@color/primary_color"/>
     <ScrollView
         android:layout_width="match_parent"

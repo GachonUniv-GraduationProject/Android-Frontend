@@ -106,6 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                     else {
                         showToast("Login Failed.");
                     }
+                    loadingDialog.dismiss();
                 }
             }
 
@@ -114,6 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                 showToast("Login Failed.");
                 Log.d("Server Test", "<Login> onFailure: " + t.getMessage());
                 SharedPreferencesManager.clearPreferences(getApplicationContext());
+                loadingDialog.dismiss();
             }
         });
     }
@@ -137,7 +139,11 @@ public class LoginActivity extends AppCompatActivity {
         else
             SharedPreferencesManager.clearPreferences(this);
 
-        Intent nextActivity = new Intent(getApplicationContext(), MainActivity.class);
+        Intent nextActivity;
+        if(LoginData.currentLoginData.isIndividual())
+            nextActivity = new Intent(getApplicationContext(), MainActivity.class);
+        else
+            nextActivity = new Intent(getApplicationContext(), BusinessScouterActivity.class);
         startActivity(nextActivity);
     }
 

@@ -14,6 +14,12 @@ public class LoginData {
     @SerializedName("token")
     private String token;
 
+    @SerializedName("field")
+    private String field;
+
+    @SerializedName("is_individual")
+    private boolean isIndividual;
+
     public LoginData(UserData user, String token) {
         this.user = user;
         this.token = token;
@@ -33,5 +39,17 @@ public class LoginData {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getField() {
+        return field;
+    }
+
+    public void setField(String field) {
+        this.field = field;
+    }
+
+    public boolean isIndividual() {
+        return isIndividual;
     }
 }

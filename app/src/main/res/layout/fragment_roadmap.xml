@@ -6,28 +6,39 @@
     android:orientation="vertical"
     tools:context=".RoadmapFragment">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:textStyle="bold"
-        android:text="Your Field"
-        android:textSize="18dp"
-        android:textColor="@color/black"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginLeft="30dp"
-        android:gravity="center_vertical"
-        android:text="Game Development: Client Programmer"
-        android:textColor="@color/black"
-        android:textSize="15dp"/>
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:textStyle="bold"
+            android:text="개발자님의 분야는"
+            android:textSize="18dp"
+            android:textColor="@color/primary_color"/>
+        <TextView
+            android:id="@+id/roadmap_field_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:gravity="center_vertical"
+            android:bufferType="spannable"
+            android:textStyle="bold"
+            android:text="Frontend에요."
+            android:textColor="@color/primary_color"
+            android:textSize="18dp"/>
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:background="@color/gray"/>
 
     <ScrollView

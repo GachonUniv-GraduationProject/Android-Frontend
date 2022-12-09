@@ -29,7 +29,7 @@
             android:textColor="@color/black"/>
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/question_checkbox_container"
+        android:id="@+id/question_content_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"

@@ -6,6 +6,9 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.Spannable;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +24,18 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class CapabilityFragment extends Fragment {
@@ -30,63 +43,147 @@ public class CapabilityFragment extends Fragment {
     private ArrayList<Integer> dataList;
     private ArrayList<String> labelList;
 
+    private List<String> preferenceList = new ArrayList<>();
+    private String userInfoJson;
+
+    private TextView nextActivityTextview;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_capability, container, false);
 
-        final TextView textView = (TextView)view.findViewById(R.id.recommendActivity);
+        nextActivityTextview = (TextView)view.findViewById(R.id.recommendActivity);
+
+        TextView fieldTextView = view.findViewById(R.id.roadmap_field_textview);
+        String field = LoginData.currentLoginData.getField();
+        fieldTextView.setText(field + "에요.");
+        Spannable fieldSpan = (Spannable) fieldTextView.getText();
+        fieldSpan.setSpan(new ForegroundColorSpan(Color.BLACK),
+                0, field.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 
         dataList = new ArrayList<>();
         labelList = new ArrayList<>();
 
         barChart = (BarChart) view.findViewById(R.id.chart);
-        setGraphData();
-
-        ArrayList act = new ArrayList();
-        String tmp = "";
-
-        //나중에 로드맵에서 스트링을 가져와서 add해서 출력하면 될듯요
-        act.add("Java 프로그래밍 해보기");
-        act.add("Django 연습하기");
-
-        for(int i=0; i<act.size(); i++) {
-            Object obj = act.get(i);
-            String str = (String)obj;
-            tmp += "- ";
-            tmp += str;
-            tmp += "\n";
-        }
-
-        textView.setText(tmp);
 
         Button myPageButton = view.findViewById(R.id.user_info_button);
         myPageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent myPageIntent = new Intent(getContext(), UserInfoActivity.class);
+                myPageIntent.putExtra("userInfoJson", userInfoJson);
                 startActivity(myPageIntent);
             }
         });
 
+        loadUserInfo();
+
         return view;
     }
 
-    private void setGraphData() {
-        labelList.add("프론트엔드");
-        labelList.add("안드로이드");
-        labelList.add("게임 개발");
-        labelList.add("백엔드");
+    private void loadUserInfo() {
+        preferenceList = new ArrayList<>();
+        int id = LoginData.currentLoginData.getUser().getId();
+        RetrofitService service = RetrofitClient.getRetrofitService();
+        Call<Object> getMyPageInfo = service.getMyPageInfo(id);
+        getMyPageInfo.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                if(response.isSuccessful()) {
+                    userInfoJson = new Gson().toJson(response.body());
+                    setUserInfo(userInfoJson);
+                }
+            }
 
-        dataList.add(50);
-        dataList.add(30);
-        dataList.add(20);
-        dataList.add(4);
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void setUserInfo(String json) {
+        JsonParser parser = new JsonParser();
+        JsonObject rootObj = (JsonObject) parser.parse(json);
+
+        JsonArray preferenceArr = (JsonArray) rootObj.get("preference");
+        for(int i = 0; i < preferenceArr.size(); i++) {
+            JsonObject elementObj = (JsonObject) preferenceArr.get(i);
+            if(elementObj.get("preference").getAsInt() >= 0) {
+                preferenceList.add(elementObj.get("field").getAsString());
+            }
+        }
+
+        loadCapability();
+    }
+
+    private void loadCapability() {
+        //TODO: Loading dialog
+
+        int id = LoginData.currentLoginData.getUser().getId();
+        String userField = LoginData.currentLoginData.getField();
+        JsonArray fieldArray = new JsonArray();
+        for(int i = 0; i < preferenceList.size(); i++) {
+            if(!preferenceList.get(i).equals(userField))
+                fieldArray.add(preferenceList.get(i));
+        }
+
+        JsonObject fieldObject = new JsonObject();
+        fieldObject.add("fields", fieldArray);
+
+        RetrofitService service = RetrofitClient.getRetrofitService();
+        Call<Object> getCapability = service.getCapability(id, fieldObject);
+        getCapability.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                if(response.isSuccessful()) {
+                    String capabilityJson = new Gson().toJson(response.body());
+                    setGraphData(capabilityJson);
+                    setNextActivity(capabilityJson);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void setGraphData(String json) {
+        JsonParser parser = new JsonParser();
+        JsonObject rootObject = (JsonObject) parser.parse(json);
+        JsonArray rootArray = (JsonArray) rootObject.get("capability");
+        for(int i = 0; i < rootArray.size(); i++) {
+            JsonObject fieldObj = (JsonObject) rootArray.get(i);
+            String name = fieldObj.get("name").getAsString();
+            int totalCurriculum = fieldObj.get("total_curriculum").getAsInt();
+            int completed = fieldObj.get("completed").getAsInt();
+            int progress = 100 * completed / totalCurriculum;
+            labelList.add(name);
+            dataList.add(progress);
+        }
 
         barChartGraph(labelList, dataList);
         barChart.setTouchEnabled(false);
         barChart.getAxisLeft().setAxisMaximum(100);
+    }
+
+    private void setNextActivity(String json) {
+        String nextActivities = "";
+
+        JsonParser parser = new JsonParser();
+        JsonObject rootObject = (JsonObject) parser.parse(json);
+        JsonArray recommendedSkills = rootObject.get("recommend_skills").getAsJsonArray();
+        for(JsonElement element : recommendedSkills) {
+            nextActivities += "- ";
+            nextActivities += element.getAsString();
+            nextActivities += "\n";
+        }
+
+        nextActivityTextview.setText(nextActivities);
     }
 
     private void barChartGraph(ArrayList<String> labelList, ArrayList<Integer> valList) {

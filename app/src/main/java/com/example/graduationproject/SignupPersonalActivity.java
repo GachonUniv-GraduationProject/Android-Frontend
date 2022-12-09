@@ -13,6 +13,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,7 +56,14 @@ public class SignupPersonalActivity extends AppCompatActivity {
                             Log.d("Server Test", msg);
                             showToast("Sign up success!");
 
+                            String signupJson = new Gson().toJson(response.body());
+                            JsonParser parser = new JsonParser();
+                            JsonObject rootObj = (JsonObject) parser.parse(signupJson);
+
+                            int userId = rootObj.get("id").getAsInt();
+                            
                             Intent surveyActivity = new Intent(getApplicationContext(), PersonalSurveyActivity.class);
+                            surveyActivity.putExtra("newUserId", userId);
                             startActivity(surveyActivity);
                         }
                     }

@@ -59,6 +59,7 @@
         android:paddingLeft="5dp"
         android:ems="10"
         android:hint="이름"
+        android:inputType="text"
         android:layout_margin="10dp"
         />
 
@@ -115,7 +116,7 @@
         android:paddingLeft="5dp"
         android:ems="10"
         android:hint="전화번호"
-        android:inputType="number"
+        android:inputType="phone"
         android:layout_margin="10dp"
         android:imeOptions="actionDone"
         />

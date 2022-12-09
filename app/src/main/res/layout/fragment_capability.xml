@@ -15,28 +15,33 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginVertical="10dp"
+            android:orientation="horizontal">
             <TextView
-                android:id="@+id/text_yourField"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:paddingLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:text="현재 개발자님의 분야는..."
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:textStyle="bold"
+                android:text="개발자님의 분야는"
                 android:textSize="18dp"
                 android:textColor="@color/primary_color"/>
-
             <TextView
-                android:id="@+id/text_fieldText"
+                android:id="@+id/roadmap_field_textview"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:text="프론트엔드에요."
-                android:textSize="15dp"
-                android:textColor="@color/black"
-                android:layout_marginBottom="10dp"
-                app:layout_constraintTop_toBottomOf="@id/text_yourField" />
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:gravity="center_vertical"
+                android:bufferType="spannable"
+                android:textStyle="bold"
+                android:text="Frontend에요."
+                android:textColor="@color/primary_color"
+                android:textSize="18dp"/>
         </LinearLayout>
+
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -60,8 +65,8 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="2px"
-        android:background="#000000"
+        android:layout_height="1dp"
+        android:background="@color/gray"
         app:layout_constraintTop_toBottomOf="@id/text_fieldText" />
 
     <TextView
@@ -97,13 +102,24 @@
         android:textSize="16dp"
         android:textColor="@color/primary_color"/>
 
-    <TextView
-        android:id="@+id/recommendActivity"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="10dp"
-        android:text="- example"
-        android:textColor="@color/black"
-        android:textSize="15dp"/>
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/recommendActivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="10dp"
+                android:lineSpacingExtra="10dp"
+                android:text="- example"
+                android:textColor="@color/black"
+                android:textSize="15dp"/>
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>

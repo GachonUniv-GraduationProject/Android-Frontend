@@ -30,6 +30,7 @@
         </activity>
         <activity
             android:name=".BusinessSurveyActivity"
+            android:noHistory="true"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -37,6 +38,7 @@
         </activity>
         <activity
             android:name=".PersonalSurveyActivity"
+            android:noHistory="true"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -44,6 +46,7 @@
         </activity>
         <activity
             android:name=".SignUpSelectionActivity"
+            android:noHistory="true"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -133,12 +136,15 @@
         </activity>
         <activity
             android:name=".SignupPersonalActivity"
+            android:noHistory="true"
             android:exported="false" />
         <activity
             android:name=".SignupBusinessActivity"
+            android:noHistory="true"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
+            android:noHistory="true"
             android:exported="false" />
     </application>
 
