@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -18,17 +17,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
-import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.listener.ChartTouchListener;
-import com.github.mikephil.charting.listener.OnChartGestureListener;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,7 +40,10 @@ public class TrendFragment extends Fragment {
 
     private FieldCategory currentTrendCategory = FieldCategory.WEB_FRONTEND;
     private List<FieldCategory> bookmarkedCategory = null;
-    /* Trend Data를 어떤 자료구조로 보관할지 */
+
+    private Map<String, Double> editedTechTrendMap;
+    private Map<String, Double> editedFrameworkTrendMap;
+    private Map<String, Double> editedEtcTrendMap;
 
     private String[] fields = {"Frontend", "Backend", "Android", "Game Client", "Game Server", "Machine Learning", "Deep Learning", "Data Science", "BigData Engineer", "Blockchain"};
     private View thisView;
@@ -71,6 +70,7 @@ public class TrendFragment extends Fragment {
         init();
 
         setCategoryListener();
+        setItemListener();
         loadTrends(currentCategory, false);
 
         return thisView;
@@ -130,6 +130,42 @@ public class TrendFragment extends Fragment {
         }
     }
 
+    private void setItemListener() {
+        TextView techButton = thisView.findViewById(R.id.tech_item_textview);
+        TextView frameworkButton = thisView.findViewById(R.id.framework_item_textview);
+        TextView etcButton = thisView.findViewById(R.id.etc_item_textview);
+
+        techButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                applyTrend(0);
+                techButton.setBackgroundResource(R.drawable.current_category_background);
+                frameworkButton.setBackground(null);
+                etcButton.setBackground(null);
+            }
+        });
+
+        frameworkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                applyTrend(1);
+                frameworkButton.setBackgroundResource(R.drawable.current_category_background);
+                techButton.setBackground(null);
+                etcButton.setBackground(null);
+            }
+        });
+
+        etcButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                applyTrend(2);
+                etcButton.setBackgroundResource(R.drawable.current_category_background);
+                frameworkButton.setBackground(null);
+                techButton.setBackground(null);
+            }
+        });
+    }
+
     private void loadTrends(int index, boolean forceLoad) {
         if(categoryTrendJson == null || forceLoad) {
             loadingDialog = new LoadingDialog(getContext());
@@ -145,7 +181,8 @@ public class TrendFragment extends Fragment {
                 public void onResponse(Call<Object> call, Response<Object> response) {
                     if (response.isSuccessful()) {
                         categoryTrendJson = new Gson().toJson(response.body());
-                        applyTrend(categoryTrendJson, fields[currentCategory]);
+                        convertTrendJson(categoryTrendJson);
+                        applyTrend(0);
                         loadingDialog.dismiss();
                     }
                 }
@@ -159,19 +196,54 @@ public class TrendFragment extends Fragment {
         else {
             categoryTextviewArray[0].setBackground(null);
             categoryTextviewArray[currentCategory].setBackgroundResource(R.drawable.current_category_background);
-            applyTrend(categoryTrendJson, fields[currentCategory]);
+            convertTrendJson(categoryTrendJson);
+            applyTrend(0);
         }
     }
 
-    private void applyTrend(String trendJson, String key) {
+    private Map<String, Double> getEditedTrendMap(JsonObject rootObj) {
         Gson gson = new Gson();
-        Map<String, Map<String, Double>> trendMap = gson.fromJson(trendJson, Map.class);
+        Map<String, Map<String, Double>> trendMap = gson.fromJson(rootObj, Map.class);
         Map<String, Double> editedTrendMap = new HashMap<>();
-        editedTrendMap = trendMap.get(key);
+        String[] techNames = trendMap.keySet().toArray(new String[trendMap.size()]);
+        for(int i = 0; i < trendMap.size(); i++) {
+            double value = trendMap.get(techNames[i]).get("count");
+            if(value > 0)
+                editedTrendMap.put(techNames[i], value);
+        }
+        return editedTrendMap;
+    }
+
+    private void convertTrendJson(String trendJson) {
+        JsonParser parser = new JsonParser();
+        JsonObject rootObj = parser.parse(trendJson).getAsJsonObject();
+
+        JsonObject techObj = rootObj.get("기술").getAsJsonObject();
+        JsonObject frameworkObj = rootObj.get("프레임워크").getAsJsonObject();
+        JsonObject etcObj = rootObj.get("기타").getAsJsonObject();
+
+        editedTechTrendMap = getEditedTrendMap(techObj);
+        editedFrameworkTrendMap = getEditedTrendMap(frameworkObj);
+        editedEtcTrendMap = getEditedTrendMap(etcObj);
+    }
+
+    private Map<String, Double> findEditedMapByIndex(int index) {
+        switch (index) {
+            case 0:
+                return editedTechTrendMap;
+            case 1:
+                return editedFrameworkTrendMap;
+            case 2:
+                return editedEtcTrendMap;
+        }
+        return null;
+    }
+
+    private void applyTrend(int item) {
 
         ArrayList<PieEntry> trend = new ArrayList<>();
         int othersCount = 0, otherCriteria = 5;
-        for(Map.Entry<String, Double> entryDetail : editedTrendMap.entrySet()) {
+        for(Map.Entry<String, Double> entryDetail : findEditedMapByIndex(item).entrySet()) {
             int val = (int)Math.round(entryDetail.getValue());
             if(val <= otherCriteria)
                 othersCount += val;
@@ -190,11 +262,6 @@ public class TrendFragment extends Fragment {
         Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "d2coding.ttf");
         pieDataSet.setValueTypeface(tf);
         drawPieChart(pieDataSet);
-        /*for(Map.Entry<String, Map<String, Integer>> entry : trendMap.entrySet()) {
-            String entryJson = gson.toJson(entry.getValue());
-            Map<String, Integer> entryMap = gson.fromJson(entryJson, Map.class);
-
-        }*/
     }
 
     private void drawPieChart(PieDataSet pieDataSet) {
