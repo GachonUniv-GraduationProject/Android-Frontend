@@ -61,62 +61,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity
-            android:name=".CapacityActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".RoadmapActivity"
-            android:exported="false" />
-        <activity
-            android:name=".trend.RadarChartActivity"
-            android:exported="true"
-            android:parentActivityName=".trend.TrendActivity">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".trend.BubbleChartActivity"
-            android:exported="true"
-            android:parentActivityName=".trend.TrendActivity">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".trend.LineChartActivity"
-            android:exported="true"
-            android:parentActivityName=".trend.TrendActivity">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".trend.PieChartActivity"
-            android:exported="true"
-            android:parentActivityName=".trend.TrendActivity">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".trend.BarChartActivity"
-            android:exported="true"
-            android:parentActivityName=".trend.TrendActivity">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".trend.TrendActivity"
-            android:exported="true">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
@@ -124,7 +68,6 @@
 
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
-        </activity>
         <activity
             android:name=".StartActivity"
             android:exported="true">

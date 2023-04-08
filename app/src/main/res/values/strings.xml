@@ -10,4 +10,6 @@
     <string name="category">Category</string>
     <string name="bookmark">Bookmark</string>
     <string name="trends">Trends</string>
+
+    <string name="none">없음</string>
 </resources>

@@ -19,11 +19,23 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
+/**
+ * Fragment indicating preferred field
+ * */
 public class FavorFieldFragment extends Fragment {
 
+    /**
+     * Container for preference field
+     * */
     private LinearLayout favorFieldContainer;
+    /**
+     * Floating action button for add preference field
+     * */
     private FloatingActionButton addFavorFab;
 
+    /**
+     * List of preference field
+     * */
     private List<String> fields;
 
     @Override
@@ -31,22 +43,28 @@ public class FavorFieldFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favor_field, container, false);
 
+        initUI(view);
+
+        updateFields();
+
+        return view;
+    }
+
+    /**
+     * Initialize UI by connecting views from xml
+     * */
+    private void initUI(View view)
+    {
+        // Load container from xml
         favorFieldContainer = view.findViewById(R.id.favor_field_container);
 
-        /*String[] fields = {"분야 1", "분야 2"};
-        FavorFieldLayout favorFieldLayout = new FavorFieldLayout(getContext());
-        favorFieldLayout.setFieldText(fields[0]);
-        favorFieldContainer.addView(favorFieldLayout);
-
-        FavorFieldLayout favorFieldLayout1 = new FavorFieldLayout(getContext());
-        favorFieldLayout1.setFieldText(fields[1]);
-        favorFieldContainer.addView(favorFieldLayout1);*/
-
+        // Set the floating action button for
         addFavorFab = view.findViewById(R.id.favor_add_fab);
         addFavorFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final EditText editText = new EditText(getContext());
+                // Alert the dialog that receives the input of the preferred area to be added
                 AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
                 dialog.setTitle("추가할 선호 분야를 입력해주세요.");
                 dialog.setView(editText);
@@ -64,16 +82,18 @@ public class FavorFieldFragment extends Fragment {
                 dialog.show();
             }
         });
-
-        updateFields();
-
-        return view;
     }
 
+    /**
+     * Apply preferred field data.
+     * */
     public void setFields(List<String> fields) {
         this.fields = fields;
     }
 
+    /**
+     * Update the preferred field to UI.
+     * */
     public void updateFields() {
         for(int i = 0; i < fields.size(); i++) {
             FavorFieldLayout favorFieldLayout = new FavorFieldLayout(getContext());
