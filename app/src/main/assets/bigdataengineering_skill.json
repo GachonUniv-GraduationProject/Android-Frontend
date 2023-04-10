@@ -1,0 +1,38 @@
+{
+    "Bigdataengineering":{
+      "기술" :[
+          "Python"
+      ],
+      "프레임워크":[
+        "Hadoop",
+        "Spark",
+        "RAPIDS",
+        "Flume, Scribe(For Unstruct Data)",
+        "Scribe",
+        "Elastic Stack",
+        "Avro",
+        "Flink",
+        "Dask",
+        "Numba",
+        "Onnx",
+        "OpenVino",
+        "MLFlow",
+        "Kafka & KSQL"
+      ],
+      "기타":[
+        "ETL process",
+        "Data Discovery",
+        "데이터 형태 요약",
+            "Data discovery",
+            "Data source & acquisition",
+            "Data integration",
+            "Data fusion",
+            "Transformation & Enrichment",
+            "Data survey",
+            "OpenRefine",
+            "Data Lake",
+            "Data Warehouse"
+      ]
+    }
+    
+  }

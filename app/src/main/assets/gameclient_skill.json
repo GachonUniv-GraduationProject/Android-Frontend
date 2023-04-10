@@ -1,0 +1,40 @@
+{
+    "GameClient":{
+        "기술" :[
+            "DirectX",
+            "OpenGL",
+            "Vulkan",
+            "WebGL",
+            "OpenGL ES",
+            "Metal",
+            "C/C++",
+            "C#",
+            "Assembly",
+            "Python",
+            "Lua"
+
+        ],
+        "프레임워크":[
+          
+        ],
+        "기타":[
+            "Decal",
+            "Billboard",
+            "Structure Buffer",
+            "Volumetric Effect",
+            "Ambient Occlusion",
+            "Atmospheric Shadowing",
+            "모션블러",
+            "Isosurface Extraction",
+            "Physically-Based Rendering",
+            "실시간 레이트레이싱", 
+            "강화 학습",
+            "인공 신경망",
+            "딥러닝",
+            "Decision Learning",
+            "Naïve Bayes Classifier",
+            "Decision Tree Learning"
+        ]
+      }
+    
+  }

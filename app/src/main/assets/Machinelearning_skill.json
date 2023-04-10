@@ -1,0 +1,30 @@
+{
+    "MachineLearning":{
+      "기술" :[
+      ],
+      "프레임워크":[
+        
+      ],
+      "기타":[
+        "Cost Functions",
+        "Gradient Descent",
+        "Naïve Bayes Classifiers",
+        "SVM",
+        "K-Nearest neighbor model",
+        "Naïve Bayes Classifiers",
+        "Logistic regression",
+        "Decision tree",
+        "Gaussian mixure",
+        "DBSCAN",
+        "Fuzzy C-Means",
+        "OPTICS",
+        "Apriori",
+        "FP tree",
+        "PCA",
+        "Ensemble learning",
+        "Scikit-learn",
+        "Spacy(NLP)"
+      ]
+    }
+    
+  }

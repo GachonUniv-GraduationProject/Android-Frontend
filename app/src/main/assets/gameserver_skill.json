@@ -1,0 +1,48 @@
+{   
+    "GameServer":{
+        "기술" :[
+          "C/C++",
+          "C#",
+          "JavaScript",
+          "TypeScript",
+          "Java",
+          "Kotlin",
+          "Scala",
+          "Erlang",
+          "Elixir",
+          "MS-SQL Server",
+          "MySQL",
+          "SQLite",
+          "PostgreSQL",
+          "SQL",
+          "MariaDB",
+          "AuroraDB",
+          "PostgreSQL",
+          "Dynamo DB",
+          "MongoDB",
+          "CouchBase",
+          "Node.js(JavaScript)",
+          "TensorFlow",
+          "PyTorch"
+        ],
+        "프레임워크":[
+            "Akka(Java)",
+            "Akka.net(C#)",
+            "Spring (Java)",
+            "ASP.NET Core(C#)",
+            "Apache Kafka",
+            "Apache Spark",
+            "Kubernetes"
+          
+        ],
+        "기타":[
+            "아마존 머신러닝",
+            "Azure 머신러닝",
+            "Docker",
+            "Microsoft Azure",
+            "Google Cloud Platform",
+            "Amazon Web Service"
+        ]
+      }
+    
+  }

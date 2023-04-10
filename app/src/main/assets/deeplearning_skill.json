@@ -1,0 +1,29 @@
+{
+    "DeepLearning":{
+      "기술" :[
+        "Python"
+      ],
+      "프레임워크":[
+        "Tenserflow",
+        "PyTorch",
+        "Tensorboard",
+        "MLFlow"
+      ],
+      "기타":[
+        "Loss functions",
+        "Activation functions",
+        "Feedforward neural network",
+        "Convolutional nerual network",
+        "Siamese network",
+        "Generative Adversarial Network",
+        "SGD",
+        "Momentum",
+        "Adam",
+        "AdaGrad",
+        "AdaDelta",
+        "Nadam",
+        "RMSProp"
+      ]
+    }
+    
+  }

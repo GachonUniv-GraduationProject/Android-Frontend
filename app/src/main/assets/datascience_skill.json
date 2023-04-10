@@ -1,0 +1,30 @@
+{
+    "DataScience":{
+      "기술" :[
+        "Python",
+        "Vega-Lite",
+        "D3.js",
+        "Tableau"
+      ],
+      "프레임워크":[
+        
+      ],
+      "기타":[
+        "Matplotlib",
+        "Plotnine",
+        "Bokeh",
+        "Seaborn",
+        "Ipyvolume(3D data)",
+        "Streamlit",
+        "Continuous distributions",
+        "Discrete distributions",
+        "Summary statistics",
+        "Important laws",
+        "Estimation",
+        "Hypothesistesting",
+        "Confidence interval",
+        "Monte carlo method"
+      ]
+    }
+    
+  }

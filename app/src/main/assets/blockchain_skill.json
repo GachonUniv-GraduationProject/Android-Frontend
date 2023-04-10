@@ -1,0 +1,41 @@
+{   
+    "Gameserver":{
+        "기술" :[
+            "Solidity",
+            "Vyper",
+            "Rust",
+            "React",
+            "JavaScript",
+            "Python",
+            "Go"     
+        ],
+        "프레임워크":[
+            "OpenZeppelin",
+            "Hardhat",
+            "Brownie",
+            "Truffle",
+            "Foundry",
+            "Angular",
+            "Vue.js",
+            "ethers.js",
+            "web3.js",
+            "Moralis"
+        ],
+        "기타":[
+           "Solana",
+           "EVM based",
+           "L2 blockchains",
+           "Oracles",
+           "ERC 토큰",
+           "Alchemy",
+           "Infura",
+            "Moralis",
+            "Quicknode",
+            "Geth",
+            "Besu",
+            "Nethermind",
+            "Substrate"
+        ]
+      }
+    
+  }

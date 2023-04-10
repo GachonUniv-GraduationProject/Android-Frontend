@@ -35,12 +35,15 @@ public class BusinessSurveyActivity extends AppCompatActivity {
     /**
      * Array of skill information file path
      * */
-    private String[] paths = {"Frontend_skill.json", "Backend_skill.json"};
-    // TODO: 분야는 어디 한군데서 한번에 관리하기
+    private String[] paths = {"Frontend_skill.json", "Backend_skill.json", "android_skill.json",
+            "gameclient_skill.json", "gameserver_skill.json", "Machinelearning_skill.json",
+            "deeplearning_skill.json", "bigdataengineering_skill.json", "blockchain_skill.json"};
+
     /**
      * Fields to be selected by business member
      * */
-    private String[] fields = {"Frontend", "Backend"};
+    private String[] fields = {"Frontend", "Backend", "Android", "GameClient", "GameServer",
+            "MachineLearning", "DeepLearning", "DataScience", "DataEngineering", "BlockChain"};
 
     /**
      * Skill data list by fields

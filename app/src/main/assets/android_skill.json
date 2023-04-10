@@ -1,0 +1,21 @@
+{
+    "Android":{
+        "기술" :[
+            "Junit",
+            "Kotlin",
+            "Java",
+            "Gradle"
+        ],
+        "프레임워크":[
+          
+        ],
+        "기타":[
+            "Data Structure",
+            "Algorithm",
+            "Activity",
+            "Fragment",
+            "Intent"
+        ]
+      }
+    
+  }
