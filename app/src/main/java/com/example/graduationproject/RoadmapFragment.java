@@ -16,6 +16,9 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * Fragment of MainActivity to show roadmap
+ * */
 public class RoadmapFragment extends Fragment {
 
     @Override
@@ -23,11 +26,14 @@ public class RoadmapFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_roadmap, container, false);
 
+        // Load roadmap container from xml
         LinearLayout roadmapContainer = view.findViewById(R.id.roadmap_container);
         FrameLayout roadmapFrameContainer = view.findViewById(R.id.roadmap_frame_container);
+        // Create roadmap drawer and add to the container
         RoadmapDrawer drawer = new RoadmapDrawer(getActivity(), roadmapFrameContainer);
         roadmapContainer.addView(drawer);
 
+        // Set the title of roadmap fragment
         TextView fieldTextView = view.findViewById(R.id.roadmap_field_textview);
         String field = LoginData.currentLoginData.getField();
         fieldTextView.setText(field + "에요.");

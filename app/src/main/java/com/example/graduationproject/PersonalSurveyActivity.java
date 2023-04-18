@@ -66,8 +66,9 @@ public class PersonalSurveyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_survey);
 
-        //
+        // Load animation set
         questionEnable = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.question_enable);
+        // Load container from xml
         surveyScrollContainer = findViewById(R.id.survey_scroll_container);
 
         //

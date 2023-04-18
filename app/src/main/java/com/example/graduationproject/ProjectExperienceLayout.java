@@ -10,11 +10,23 @@ import android.widget.TextView;
 
 import androidx.annotation.Dimension;
 
+/**
+ * Layout preset for showing experience record
+ * */
 public class ProjectExperienceLayout extends LinearLayout {
 
+    /**
+     * Context of this layout
+     * */
     private Context context;
 
+    /**
+     * Textview showing that the field to which this experience belongs
+     * */
     private TextView fieldTextview;
+    /**
+     * Container of project data
+     * */
     private LinearLayout projectContainer;
 
     public ProjectExperienceLayout(Context context) {
@@ -24,14 +36,21 @@ public class ProjectExperienceLayout extends LinearLayout {
         inflater.inflate(R.layout.layout_project_experience, this, true);
         this.context = context;
 
+        // Load views from xml
         fieldTextview = findViewById(R.id.field_title_Text);
         projectContainer = findViewById(R.id.project_container);
     }
 
+    /**
+     * Set the field of this experience
+     * */
     public void setField(String field) {
         fieldTextview.setText(field);
     }
 
+    /**
+     * Add project to container
+     * */
     public void addProject(String[] projects) {
         for(int i = 0; i < projects.length; i++) {
             TextView textView = new TextView(context);
@@ -44,6 +63,9 @@ public class ProjectExperienceLayout extends LinearLayout {
             projectContainer.addView(textView);
         }
     }
+    /**
+     * Convert dp to pixel size
+     * */
     private int dpToPx(int dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
     }

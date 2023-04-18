@@ -38,7 +38,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Activity to identify user competencies
+ * Fragment of MainActivity to identify user competencies
  * */
 public class CapabilityFragment extends Fragment {
     /**

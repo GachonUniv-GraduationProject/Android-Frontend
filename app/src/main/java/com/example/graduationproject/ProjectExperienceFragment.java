@@ -11,9 +11,18 @@ import android.widget.LinearLayout;
 
 import java.util.List;
 
+/**
+ * Project Experience Fragments to be shown in User Information Activity
+ * */
 public class ProjectExperienceFragment extends Fragment {
 
+    /**
+     * Container for experience list
+     * */
     private LinearLayout projectExperienceContainer;
+    /**
+     * List of experience data
+     * */
     private List<Experience> experienceList;
 
     @Override
@@ -21,33 +30,28 @@ public class ProjectExperienceFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_project_experience, container, false);
 
+        // Load container from xml
         projectExperienceContainer = view.findViewById(R.id.project_experience_container);
 
-        /*String[] fields = {"분야 1", "분야 2"};
-        String[] projects1 = {"프로젝트 1", "프로젝트 2"};
-        String[] projects2 = {"프로젝트 1", "프로젝트 3"};
-
-        ProjectExperienceLayout experienceLayout1 = new ProjectExperienceLayout(getContext());
-        experienceLayout1.setField(fields[0]);
-        experienceLayout1.addProject(projects1);
-        projectExperienceContainer.addView(experienceLayout1);
-
-        ProjectExperienceLayout experienceLayout2 = new ProjectExperienceLayout(getContext());
-        experienceLayout2.setField(fields[1]);
-        experienceLayout2.addProject(projects2);
-        projectExperienceContainer.addView(experienceLayout2);*/
-
+        // If experience list is available, update the experience list
         if(experienceList != null)
             updateExperiences();
 
         return view;
     }
 
+    /**
+     * Set list of experience data
+     * */
     public void setExperienceList(List<Experience> experienceList) {
         this.experienceList = experienceList;
     }
 
+    /**
+     * Update experience data to the view
+     * */
     public void updateExperiences() {
+        // Create experience layout, set the data, and add to container for each experience
         for(int i = 0; i < experienceList.size(); i++) {
             ProjectExperienceLayout experienceLayout = new ProjectExperienceLayout(getContext());
             experienceLayout.setField(experienceList.get(i).getField());
