@@ -17,33 +17,40 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
+/**
+ * Fragments representing non-preferred areas
+ * */
 public class UnfavorFieldFragment extends Fragment {
 
+    /**
+     * Container for unfavor field info
+     * */
     private LinearLayout unfavorFieldContainer;
+    /**
+     * Add field floating action button
+     * */
     private FloatingActionButton addUnfavorFab;
 
+    /**
+     * List of non-preferred fields
+     * */
     private List<String> fields;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate this layout
         View view = inflater.inflate(R.layout.fragment_unfavor_field, container, false);
 
+        // Load container from xml
         unfavorFieldContainer = view.findViewById(R.id.unfavor_field_container);
 
-        /*String[] fields = {"분야 4", "분야 5"};
-        FavorFieldLayout favorFieldLayout = new FavorFieldLayout(getContext());
-        favorFieldLayout.setFieldText(fields[0]);
-        unfavorFieldContainer.addView(favorFieldLayout);
-
-        FavorFieldLayout favorFieldLayout1 = new FavorFieldLayout(getContext());
-        favorFieldLayout1.setFieldText(fields[1]);
-        unfavorFieldContainer.addView(favorFieldLayout1);*/
-
+        // Set floating action button listener
         addUnfavorFab = view.findViewById(R.id.unfavor_add_fab);
         addUnfavorFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Activate incoming dialogs for fields to add
                 final EditText editText = new EditText(getContext());
                 AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
                 dialog.setTitle("추가할 비선호 분야를 입력해주세요.");
@@ -62,15 +69,22 @@ public class UnfavorFieldFragment extends Fragment {
                 dialog.show();
             }
         });
+        //
         updateFields();
 
         return view;
     }
 
+    /**
+     * Set field list
+     * */
     public void setFields(List<String> fields) {
         this.fields = fields;
     }
 
+    /**
+     * Apply non-preferred field to UI
+     * */
     public void updateFields() {
         for(int i = 0; i < fields.size(); i++) {
             FavorFieldLayout favorFieldLayout = new FavorFieldLayout(getContext());

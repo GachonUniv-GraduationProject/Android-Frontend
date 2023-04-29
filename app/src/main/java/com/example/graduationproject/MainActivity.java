@@ -10,7 +10,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 /**
- *
+ * Home Activity that viewed to individual users
  * */
 public class MainActivity extends AppCompatActivity {
 
