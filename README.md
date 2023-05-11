@@ -15,6 +15,9 @@ Services to help prospective developers who wish to work as developers prepare t
 - When users are contemplating a change of field, they can see how appropriate they are in other areas.
 - It summarizes the project experience, preferences, and non-preference areas according to what user have completed in the survey.
 
+## Installation
+<a href="/APK">APK Download</a>
+
 ## Architecture
 <img src="/display_images/backend_architecture_decorated.png" width="80%" height="80%" title="Project Architecture" alt="Project Architecture"></img>
 
