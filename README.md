@@ -16,7 +16,7 @@ Services to help prospective developers who wish to work as developers prepare t
 - It summarizes the project experience, preferences, and non-preference areas according to what user have completed in the survey.
 
 ## Architecture
-<img src="/display_images/backend_architecture_decorated.png" title="Project Architecture" alt="Project Architecture"></img>
+<img src="/display_images/backend_architecture_decorated.png" width="80%" height="80%" title="Project Architecture" alt="Project Architecture"></img>
 
 ## Screenshots
 <img src="/display_images/00.시작화면.png" width="240" height="426" title="Starting Screen" alt="Starting Screen"></img>
