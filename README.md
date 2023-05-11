@@ -41,6 +41,8 @@ Services to help prospective developers who wish to work as developers prepare t
 ## Development Environment
 - Android Studio 2021.3.1
   - JDK 11.0.13
+  - Min SDK Version: 21
+  - Target SDK Version: 32
 - Retrofit2 v.2.9.0
   - Converter-gson v2.9.0
   - okhttp3 v3.12.1
