@@ -16,7 +16,7 @@ Services to help prospective developers who wish to work as developers prepare t
 - It summarizes the project experience, preferences, and non-preference areas according to what user have completed in the survey.
 
 ## Installation
-You can download the android application <a href="/APK">Here</a>.
+You can download the android application <a href="/APK">here</a>.
 
 ## Architecture
 <img src="/display_images/backend_architecture_decorated.png" width="80%" height="80%" title="Project Architecture" alt="Project Architecture"></img>
