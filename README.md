@@ -48,6 +48,7 @@ Services to help prospective developers who wish to work as developers prepare t
 
 ## External Resource Source
 **[Font]**
-- 네이버, 네이버 문화재단: D2Coding
+- 네이버, 네이버 문화재단: D2Coding  
+
 **[Image]**
-<a href="https://www.flaticon.com/free-icons/lock" title="lock icons">Lock icons created by Pixel perfect - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/lock" title="lock icons">Lock icons created by Pixel perfect - Flaticon</a>
