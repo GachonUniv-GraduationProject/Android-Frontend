@@ -52,3 +52,13 @@ Services to help prospective developers who wish to work as developers prepare t
 
 **[Image]**
 - <a href="https://www.flaticon.com/free-icons/lock" title="lock icons">Lock icons created by Pixel perfect - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/company" title="company icons">Company icons created by Pixel perfect - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/filter" title="filter icons">Filter icons created by herikus - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/filter" title="filter icons">Filter icons created by Freepik - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/roadmap" title="roadmap icons">Roadmap icons created by DailyPm Studio - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/phone" title="phone icons">Phone icons created by Freepik - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/capability" title="capability icons">Capability icons created by smashingstocks - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/phone" title="phone icons">Phone icons created by Freepik - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/survey" title="survey icons">Survey icons created by Freepik - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/trend" title="trend icons">Trend icons created by Cuputo - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/identification" title="identification icons">Identification icons created by Pixel perfect - Flaticon</a>
