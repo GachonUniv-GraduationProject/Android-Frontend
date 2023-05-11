@@ -39,7 +39,15 @@ Services to help prospective developers who wish to work as developers prepare t
 
 
 ## Development Environment
-- 
+- Android Studio 2021.3.1
+  - JDK 11.0.13
+- Retrofit2 v.2.9.0
+  - Converter-gson v2.9.0
+  - okhttp3 v3.12.1
+- MPAndroidChart v3.1.0
 
 ## External Resource Source
-- 
+**[Font]**
+- 네이버, 네이버 문화재단: D2Coding
+**[Image]**
+<a href="https://www.flaticon.com/free-icons/lock" title="lock icons">Lock icons created by Pixel perfect - Flaticon</a>
