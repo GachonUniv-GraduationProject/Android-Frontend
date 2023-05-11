@@ -259,7 +259,12 @@ public class TrendFragment extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<Object> call, Throwable t) { }
+                public void onFailure(Call<Object> call, Throwable t) {
+                    // Disable loading dialog
+                    loadingDialog.dismiss();
+
+                    Toast.makeText(getContext(), "트렌드 데이터를 불러오지 못했습니다.", Toast.LENGTH_SHORT).show();
+                }
             });
         }
         else {
